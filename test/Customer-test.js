@@ -52,7 +52,18 @@ describe("Customer", () => {
     customer1.getCustomerBookings(bookingsData);
     customer1.getTotalSpend(roomsData);
 
+    customer2.getCustomerBookings(bookingsData);
+    customer2.getTotalSpend(roomsData);
+
     expect(customer1.amountSpent).to.equal(358.4);
+    expect(customer2.amountSpent).to.equal(649.47)
+  });
+
+  it("should have a total amount spent of 0 if user has no rooms booked", () => {
+    customer3.getCustomerBookings(bookingsData);
+    customer3.getTotalSpend(roomsData);
+
+    expect(customer3.amountSpent).to.equal(0);
   });
 });
 
