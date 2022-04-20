@@ -27,6 +27,7 @@ describe("Customer", () => {
     expect(customer1.name).to.equal("Leatha Ullrich");
     expect(customer2.name).to.equal("Rocio Schuster");
   });
+});
 
 // it should have a property that contains the customer's all time bookings
 // it should have a method to determine if the booking occurred in the past
@@ -44,6 +45,3 @@ describe("Customer", () => {
 
 // it should have a method that totals up the amount spent on rooms over the customer's lifetime.
   // iterates over each of the past/current/future rooms arrays and totals up those costs, combines those three totals to get the grand total
-
-
-});
