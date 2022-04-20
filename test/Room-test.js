@@ -20,8 +20,8 @@ describe("Room", () => {
   });
 
   it("should have a property that holds the room's number", () => {
-    expect(room1.number).to.equal(1);
-    expect(room2.number).to.equal(2);
+    expect(room1.number).to.equal(15);
+    expect(room2.number).to.equal(24);
   });
 
   it("should have a property that holds the room's type", () => {
