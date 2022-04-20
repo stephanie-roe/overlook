@@ -38,8 +38,8 @@ describe("Customer", () => {
     expect(customer1.allBookings[0].roomNumber).to.equal(15);
     expect(customer1.allBookings[0].id).to.equal("5fwrgu4i7k55hl6sz");
 
-    expect(customer2.allBookings[0].roomNumber).to.equal(24);
-    expect(customer2.allBookings[0].id).to.equal("5fwrgu4i7k55hl6t5");
+    expect(customer2.allBookings[1].roomNumber).to.equal(12);
+    expect(customer2.allBookings[1].id).to.equal("5fwrgu4i7k55hl6t6");
   });
 
   it("should not add a booking to the user's allBookings property if the booking does not belong to the user", () => {
