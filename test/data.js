@@ -18,4 +18,13 @@ const customersData = [ {"id": 1,
                       "name": "Rocio Schuster"},];
 
 
-export {roomsData, customersData};
+const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
+                      "userID": 1,
+                      "date": "2022/04/22",
+                      "roomNumber": 15},
+                      {"id": "5fwrgu4i7k55hl6t5",
+                      "userID": 2,
+                      "date": "2022/01/24",
+                      "roomNumber": 24}]
+
+export {roomsData, customersData, bookingsData};
