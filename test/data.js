@@ -1,10 +1,10 @@
-const roomsData = [ {"number": 1,
+const roomsData = [ {"number": 15,
                       "roomType": "residential suite",
                       "bidet": true,
                       "bedSize": "queen",
                       "numBeds": 1,
                       "costPerNight": 358.4},
-                      {"number": 2,
+                      {"number": 24,
                       "roomType": "suite",
                       "bidet": false,
                       "bedSize": "full",
@@ -15,7 +15,9 @@ const roomsData = [ {"number": 1,
 const customersData = [ {"id": 1,
                       "name": "Leatha Ullrich"},
                       {"id": 2,
-                      "name": "Rocio Schuster"},];
+                      "name": "Rocio Schuster"},
+                      {"id": 3,
+                      "name": "Kelvin Schiller"}];
 
 
 const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
@@ -25,6 +27,6 @@ const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
                       {"id": "5fwrgu4i7k55hl6t5",
                       "userID": 2,
                       "date": "2022/01/24",
-                      "roomNumber": 24}]
+                      "roomNumber": 24}];
 
 export {roomsData, customersData, bookingsData};
