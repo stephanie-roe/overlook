@@ -4,11 +4,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Overlook Hotel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;400;500;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
+  <header>
+    <div class="header-container">
+      <h1>Overlook Hotel</h1>
+    </div>
+  </header>
+  <main>
+  <nav class="nav-bar">
+    <p>Customer 50</p>
+  </nav>
+  <section class="user-dashboard">
+    <h2>My Bookings</h2>
+    <div class="booking-tiles-container">
+      <section class="past-bookings">
+        <h3>Past Bookings</h3>
+      </section>
+      <section class="current-bookings">
+        <h3>Current Bookings</h3>
+      </section>
+      <section class="future-bookings">
+        <h3>Future Bookings</h3>
+      </section>
+    </div>
+    <section class="total">
+      <h3 class="total-text">Total: $$$</h3>
+    </section>
+  </section>
+</main>
+  <!-- <img src="./images/turing-logo.png" alt="turing logo"> -->
+
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
 
