@@ -30,6 +30,7 @@ describe("Customer", () => {
   });
 });
 
+// it should have a method that allows the user to book a room
 // it should have a property that contains the customer's all time bookings
 // it should have a method to determine if the booking occurred in the past
   // this method will reference current date using conditional logic
