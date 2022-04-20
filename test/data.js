@@ -12,4 +12,10 @@ const roomsData = [ {"number": 1,
                       "costPerNight": 477.38}];
 
 
-export {roomsData};
+const customersData = [ {"id": 1,
+                      "name": "Leatha Ullrich"},
+                      {"id": 2,
+                      "name": "Rocio Schuster"},];
+
+
+export {roomsData, customersData};

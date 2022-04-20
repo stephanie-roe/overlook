@@ -1,13 +1,14 @@
 import chai from "chai";
 const expect = chai.expect;
-import Customer from "../src/classes/Customer"
+import Customer from "../src/classes/Customer";
+import {customersData} from "./data";
 
 describe("Customer", () => {
   let customer1, customer2;
 
   beforeEach(() => {
-    customer1 = new Customer(1, "Leatha Ullrich");
-    customer2 = new Customer(2, "Rocio Schuster");
+    customer1 = new Customer(customersData[0]);
+    customer2 = new Customer(customersData[1]);
   });
 
   it("should be a function", () => {
