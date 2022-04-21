@@ -65,6 +65,23 @@ describe("Customer", () => {
 
     expect(customer3.amountSpent).to.equal(0);
   });
+
+  it("should have a method that stores all of the rooms a customer has booked with all the necessary info", () => {
+    customer1.getCustomerBookings(bookingsData);
+    customer1.getAllRooms(roomsData);
+
+    expect(customer1.allRooms[0].roomType).to.equal("residential suite");
+    expect(customer1.allRooms[0].bidet).to.equal(true);
+    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/22");
+  });
+
+  it("should not have any rooms if the customer has no bookings", () => {
+    customer3.getCustomerBookings(bookingsData);
+    customer3.getAllRooms(roomsData);
+
+    expect(customer3.allRooms).to.deep.equal([]);
+  });
+  
 });
 
 // it should have a method that allows the user to book a room
