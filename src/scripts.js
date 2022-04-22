@@ -12,7 +12,7 @@ let roomsData = [];
 let currentCustomer;
 
 //Query Selectors
-const pastBookingsTile = document.querySelector(".past-bookings");
+const bookingsCardsContainer = document.querySelector(".booking-cards-container");
 const totalSpendTile = document.querySelector(".total");
 
 //Event Listeners
@@ -70,13 +70,15 @@ const showBookings = () => {
   currentCustomer.getAllRooms(roomsData);
 
   currentCustomer.allRooms.forEach((room) => {
-    pastBookingsTile.innerHTML += `<section class="bookings-card">
+    bookingsCardsContainer.innerHTML += `<section class="bookings-card">
+                                <div class="booking-card-header"
                                   <p class="date">${room.dateBooked}</p>
-                                  <p class="room-type">You booked the ${room.roomType}.</p>
                                   <p class="booking-details">Room Number: ${room.number}</p>
+                                </div>
+                                  <p class="room-type">You booked the ${room.roomType}.</p>
                                   <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
                                   <p class="booking-details">Has bidet? ${room.bidet}</p>
-                                  <p class="total">Total: $${room.costPerNight}</p>
+                                  <p class="booking-total">Total: $${room.costPerNight}</p>
                                   </section>`
   // could be cool to reformat the date so it is more readable
   })
