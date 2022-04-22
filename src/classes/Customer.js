@@ -106,14 +106,15 @@ class Customer {
 
     let result = sortedDates.reduce((acc, date) => {
       this[roomsArray].forEach(room => {
-        let bookingDate = Date.parse(room.date)
-        if (date === bookingDate) {
+        let bookingDate = Date.parse(room.dateBooked)
+        if (date === bookingDate && !acc.includes(room)) {
           acc.push(room)
         }
       })
       return acc
     }, [])
-     this[roomsArray] = result
+    console.log(result)
+     return result
   }
 };
 

@@ -75,6 +75,8 @@ const showPastBookings = () => {
   // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getPastRooms();
+  currentCustomer.pastBookings = currentCustomer.sortBookingDates("pastBookings")
+
   currentCustomer.pastBookings.forEach((room) => {
     const total = currencyFormatter.format(room.costPerNight);
     pastBookingsTile.innerHTML += `<section class="bookings-card">
@@ -95,6 +97,7 @@ const showCurrentBookings = () => {
   // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getCurrentRoom();
+  currentCustomer.pastBookings = currentCustomer.sortBookingDates("currentBookings")
 
   if (!currentCustomer.currentBookings.length) {
     currentBookingsTile.innerHTML += `<section class="book-now-cta">
@@ -121,7 +124,7 @@ const showFutureBookings = () => {
   // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getFutureRooms();
-
+  currentCustomer.pastBookings = currentCustomer.sortBookingDates("futureBookings")
 
   currentCustomer.futureBookings.forEach((room) => {
     const total = currencyFormatter.format(room.costPerNight);
@@ -150,3 +153,26 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
+// const getBookingsTimeline = (roomsArray) => {
+// //   let sortedDates = this[roomsArray].reduce((acc, room) => {
+// //     let parsed = Date.parse(room.dateBooked);
+// //     acc.push(parsed);
+// //     return acc
+// //   }, []);
+// //
+// //   sortedDates.sort((a, b) => {
+// //     return b - a
+// //   })
+// //   let result = sortedDates.reduce((acc, date) => {
+// //     this[roomsArray].forEach(room => {
+// //       let bookingDate = Date.parse(room.date)
+// //       if (date === bookingDate) {
+// //         acc.push(room)
+// //       }
+// //     })
+// //     return acc
+// //   }, [])
+// //    this[roomsArray] = result
+// //   }
+// // }
