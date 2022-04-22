@@ -87,6 +87,21 @@ h2 {
   align-items: center;
 }
 
+.booking-cards-container {
+  overflow-y: scroll;
+}
+/* .future-bookings::-webkit-scrollbar,
+.current-bookings::-webkit-scrollbar,
+.past-bookings::-webkit-scrollbar {
+  width: 10%;
+} */
+
+.booking-cards-container::-webkit-scrollbar {
+  width: 10%;
+}
+/* add inner box shadow it will look more scrollable */
+
+
 .total {
   background: rgba(247, 97, 32, 0.8);
   border-radius: 30px;
@@ -103,9 +118,30 @@ h3 {
   padding-top: 20px;
 }
 
-.total-text {
+.total-spent {
   margin-left: 30px;
   padding-top: 60px;
   font-size: 25px;
   color: #2A1B10;
+}
+
+.bookings-card {
+  background-color: #FAF6F5;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px 0px;
+}
+
+.booking-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.date,
+.room-type,
+.booking-details,
+.booking-total {
+  font-size: 10px;
+  padding: 5px;
 }
