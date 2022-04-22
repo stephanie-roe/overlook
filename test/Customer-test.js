@@ -72,7 +72,7 @@ describe("Customer", () => {
 
     expect(customer1.allRooms[0].roomType).to.equal("residential suite");
     expect(customer1.allRooms[0].bidet).to.equal(true);
-    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/22");
+    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/23");
   });
 
   it("should not have any rooms if the customer has no bookings", () => {
@@ -81,7 +81,18 @@ describe("Customer", () => {
 
     expect(customer3.allRooms).to.deep.equal([]);
   });
-  
+
+  it("should be able to determine if a customer has any upcoming bookings", () => {
+    customer1.getCustomerBookings(bookingsData);
+    customer1.getAllRooms(roomsData);
+    customer1.getFutureRooms();
+
+    expect(customer1.futureBookings[0].dateBooked).to.equal("2022/04/23");
+  });
+
+// add more testing and sad path for this method
+
+
 });
 
 // it should have a method that allows the user to book a room

@@ -31,7 +31,7 @@ describe("Booking", () => {
   });
 
   it("should have a date that is has been booked", () => {
-    expect(booking1.date).to.equal("2022/04/22");
+    expect(booking1.date).to.equal("2022/04/23");
     expect(booking2.date).to.equal("2022/01/24");
   });
 
