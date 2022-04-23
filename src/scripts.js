@@ -28,6 +28,7 @@ const roomChoiceCTA = document.querySelector(".room-choice-cta");
 const submitBookingButton = document.querySelector(".submit-booking-button");
 const selectedBookingTotal = document.querySelector(".selected-booking-total");
 const roomConfirmation = document.querySelector(".room-confirmation");
+const homeButton = document.querySelector(".user-dashboard-button")
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -46,6 +47,11 @@ roomOptionsContainer.addEventListener("click", function(e) {
     console.log(e.target.id)
     showSelectedTotal(e.target.id)
   }
+});
+
+homeButton.addEventListener("click", function() {
+  hide([bookingDashboard, homeButton])
+  show([userDashboard])
 })
 
 //Event Handlers
@@ -185,7 +191,7 @@ const hide = elements => {
 
 const loadBookingDashboard = () => {
   hide([userDashboard])
-  show([bookingDashboard])
+  show([bookingDashboard, homeButton])
   injectBookingForm()
 };
 
