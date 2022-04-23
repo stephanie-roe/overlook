@@ -15,7 +15,13 @@ const roomsData = [ {"number": 15,
                       "bidet": false,
                       "bedSize": "twin",
                       "numBeds": 2,
-                      "costPerNight": 172.09}];
+                      "costPerNight": 172.09},
+                      {"number": 11,
+                      "roomType": "single room",
+                      "bidet": true,
+                      "bedSize": "twin",
+                      "numBeds": 2,
+                      "costPerNight": 207.24}];
 
 
 const customersData = [ {"id": 1,
@@ -32,11 +38,15 @@ const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
                       "roomNumber": 15},
                       {"id": "5fwrgu4i7k55hl6t5",
                       "userID": 2,
-                      "date": "2022/01/24",
+                      "date": "2022/04/22",
                       "roomNumber": 24},
                       {"id": "5fwrgu4i7k55hl6t6",
                       "userID": 2,
                       "date": "2022/01/10",
-                      "roomNumber": 12}];
+                      "roomNumber": 12},
+                      {"id": "5fwrgu4i7k55hl6ti",
+                      "userID": 2,
+                      "date": "2022/01/22",
+                      "roomNumber": 11}];
 
 export {roomsData, customersData, bookingsData};

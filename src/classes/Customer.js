@@ -113,8 +113,7 @@ class Customer {
       })
       return acc
     }, [])
-    console.log(result)
-     return result
+     return this[roomsArray] = result
   }
 };
 
