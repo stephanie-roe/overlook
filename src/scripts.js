@@ -12,7 +12,9 @@ let roomsData = [];
 let currentCustomer;
 
 //Query Selectors
-const bookingsCardsContainer = document.querySelector(".booking-cards-container");
+const pastBookingsTile = document.querySelector(".past-booking-cards-container");
+const currentBookingsTile = document.querySelector(".current-booking-cards-container");
+const futureBookingsTile = document.querySelector(".future-booking-cards-container");
 const totalSpendTile = document.querySelector(".total");
 
 //Event Listeners
@@ -38,7 +40,10 @@ const loadWindow = () => {
       roomsData.push(room);
     });
     instantiateCustomer(50);
-    showBookings();
+    currentCustomer.getCustomerBookings(bookingsData);
+    showPastBookings();
+    showCurrentBookings();
+    showFutureBookings();
     showTotal();
   })
   // showData();
@@ -65,12 +70,17 @@ const instantiateCustomer = (id) => {
   return currentCustomer
 };
 
-const showBookings = () => {
-  currentCustomer.getCustomerBookings(bookingsData);
-  currentCustomer.getAllRooms(roomsData);
+const showPastBookings = () => {
 
-  currentCustomer.allRooms.forEach((room) => {
-    bookingsCardsContainer.innerHTML += `<section class="bookings-card">
+  // currentCustomer.getCustomerBookings(bookingsData);
+  currentCustomer.getAllRooms(roomsData);
+  currentCustomer.getPastRooms();
+  currentCustomer.sortBookingDates("pastBookings")
+  // currentCustomer.pastBookings = currentCustomer.sortBookingDates("pastBookings")
+
+  currentCustomer.pastBookings.forEach((room) => {
+    const total = currencyFormatter.format(room.costPerNight);
+    pastBookingsTile.innerHTML += `<section class="bookings-card">
                                 <div class="booking-card-header"
                                   <p class="date">${room.dateBooked}</p>
                                   <p class="booking-details">Room Number: ${room.number}</p>
@@ -78,13 +88,69 @@ const showBookings = () => {
                                   <p class="room-type">You booked the ${room.roomType}.</p>
                                   <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
                                   <p class="booking-details">Has bidet? ${room.bidet}</p>
-                                  <p class="booking-total">Total: $${room.costPerNight}</p>
+                                  <p class="booking-total">Total: ${total}</p>
+                                  </section>`
+  // could be cool to reformat the date so it is more readable
+  })
+}
+
+const showCurrentBookings = () => {
+  // currentCustomer.getCustomerBookings(bookingsData);
+  currentCustomer.getAllRooms(roomsData);
+  currentCustomer.getCurrentRoom();
+  currentCustomer.sortBookingDates("currentBookings")
+
+  if (!currentCustomer.currentBookings.length) {
+    currentBookingsTile.innerHTML += `<section class="book-now-cta">
+                                      <p class="book-now-message">No active bookings, we hope to see you soon!</p>
+                                      </section>`
+  } else if (currentCustomer.currentBookings.length > 0) {
+    currentCustomer.currentBookings.forEach((room) => {
+      const total = currencyFormatter.format(room.costPerNight);
+      currentBookingsTile.innerHTML += `<section class="bookings-card">
+                                  <div class="booking-card-header"
+                                    <p class="date">${room.dateBooked}</p>
+                                    <p class="booking-details">Room Number: ${room.number}</p>
+                                  </div>
+                                    <p class="room-type">You booked the ${room.roomType}.</p>
+                                    <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
+                                    <p class="booking-details">Has bidet? ${room.bidet}</p>
+                                    <p class="booking-total">Total: ${total}</p>
+                                    </section>`
+    })
+  }
+}
+
+const showFutureBookings = () => {
+  // currentCustomer.getCustomerBookings(bookingsData);
+  currentCustomer.getAllRooms(roomsData);
+  currentCustomer.getFutureRooms();
+  currentCustomer.sortBookingDates("futureBookings")
+
+  currentCustomer.futureBookings.forEach((room) => {
+    const total = currencyFormatter.format(room.costPerNight);
+    futureBookingsTile.innerHTML += `<section class="bookings-card">
+                                <div class="booking-card-header"
+                                  <p class="date">${room.dateBooked}</p>
+                                  <p class="booking-details">Room Number: ${room.number}</p>
+                                </div>
+                                  <p class="room-type">You booked the ${room.roomType}.</p>
+                                  <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
+                                  <p class="booking-details">Has bidet? ${room.bidet}</p>
+                                  <p class="booking-total">Total: ${total}</p>
                                   </section>`
   // could be cool to reformat the date so it is more readable
   })
 }
 
 const showTotal = () => {
-  currentCustomer.getTotalSpend(roomsData);
-  totalSpendTile.innerHTML += `<h3 class="total-spent">Total: $${currentCustomer.amountSpent}</h3>`
+  totalSpendTile.innerHTML = ""
+  const total = currentCustomer.getTotalSpend(roomsData);
+  const displayTotal = currencyFormatter.format(total)
+  totalSpendTile.innerHTML += `<h3 class="total-spent">Total: ${displayTotal}</h3>`
 }
+
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});

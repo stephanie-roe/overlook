@@ -56,7 +56,7 @@ describe("Customer", () => {
     customer2.getTotalSpend(roomsData);
 
     expect(customer1.amountSpent).to.equal(358.4);
-    expect(customer2.amountSpent).to.equal(649.47)
+    expect(customer2.amountSpent).to.equal(856.71)
   });
 
   it("should have a total amount spent of 0 if user has no rooms booked", () => {
@@ -72,7 +72,7 @@ describe("Customer", () => {
 
     expect(customer1.allRooms[0].roomType).to.equal("residential suite");
     expect(customer1.allRooms[0].bidet).to.equal(true);
-    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/22");
+    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/23");
   });
 
   it("should not have any rooms if the customer has no bookings", () => {
@@ -81,25 +81,67 @@ describe("Customer", () => {
 
     expect(customer3.allRooms).to.deep.equal([]);
   });
-  
+
+  it("should be able to determine if a customer has any upcoming bookings", () => {
+    customer1.getCustomerBookings(bookingsData);
+    customer1.getAllRooms(roomsData);
+    customer1.getFutureRooms();
+
+    expect(customer1.futureBookings[0].dateBooked).to.equal("2022/04/23");
+  });
+
+  it("should not have any rooms in it's futureBookings array if they do not have any upcoming bookings", () => {
+    customer3.getCustomerBookings(bookingsData);
+    customer3.getAllRooms(roomsData);
+    customer3.getFutureRooms();
+
+    expect(customer3.futureBookings).to.deep.equal([]);
+  });
+
+  it("should be able to determine if a customer has any active bookings", () => {
+    customer2.getCustomerBookings(bookingsData);
+    customer2.getAllRooms(roomsData);
+    customer2.getCurrentRoom();
+
+    expect(customer2.currentBookings[0].dateBooked).to.equal("2022/04/22");
+  });
+
+  it("should be able to determine if a customer does not have any active bookings", () => {
+    customer3.getCustomerBookings(bookingsData);
+    customer3.getAllRooms(roomsData);
+    customer3.getCurrentRoom();
+
+    expect(customer3.currentBookings).to.deep.equal([]);
+  });
+
+  it("should be able to determine if a customer has any past bookings", () => {
+    customer2.getCustomerBookings(bookingsData);
+    customer2.getAllRooms(roomsData);
+    customer2.getPastRooms();
+
+    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/01/10");
+  });
+
+  it("should be able to determine if a customer does not have any past bookings", () => {
+    customer3.getCustomerBookings(bookingsData);
+    customer3.getAllRooms(roomsData);
+    customer3.getPastRooms();
+
+    expect(customer3.pastBookings).to.deep.equal([]);
+  });
+
+  it("should be able sort a customer's bookings for each category in chronological order", () => {
+    customer2.getCustomerBookings(bookingsData);
+    customer2.getAllRooms(roomsData);
+    customer2.getPastRooms();
+    customer2.sortBookingDates("pastBookings");
+
+    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/01/22");
+    expect(customer2.pastBookings[0].costPerNight).to.equal(207.24);
+  });
+
+// sad path for sort function???? 
+
 });
 
 // it should have a method that allows the user to book a room
-
-// it should have a method to determine if the booking occurred in the past
-  // this method will reference current date using conditional logic
-  // if it is before the current date, it will be pushed into past bookings array (happy path)
-  // if the booking did not occur in the past, it will not pass the conditional logic and nothing will be pushed into the past bookings array/ []. (sad path)
-
-// it should have a method to determine if the booking is currently active (referencing current date)
-  // this method will reference the current date using conditional logic
-  // if the current date matches the date booked, the booking will be pushed into the current bookings array (happy path)
-  // if the current date does not match the date booked, the current bookings array will remain empty/[] (sad path)
-
-// it should have a method to determine if the booking is scheduled for the future (referencing current date)
-  // this method will reference current date using conditional logic
-  // if the booking is before the current date, the booking will be pushed into the furture bookings array (happy path)
-  // if the booking is in the past/ current, it will not be pushed and the future bookings array will remain empty/ [] (sad path)
-
-// it should have a method that totals up the amount spent on rooms over the customer's lifetime.
-  // iterates over each of the past/current/future rooms arrays and totals up those costs, combines those three totals to get the grand total

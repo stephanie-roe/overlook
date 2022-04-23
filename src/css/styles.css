@@ -87,7 +87,10 @@ h2 {
   align-items: center;
 }
 
-.booking-cards-container {
+
+.past-booking-cards-container,
+.current-booking-cards-container,
+.future-bookings-cards-container {
   overflow-y: scroll;
 }
 /* .future-bookings::-webkit-scrollbar,
@@ -96,7 +99,9 @@ h2 {
   width: 10%;
 } */
 
-.booking-cards-container::-webkit-scrollbar {
+.past-booking-cards-container::-webkit-scrollbar,
+.past-booking-cards-container::-webkit-scrollbar,
+.past-booking-cards-container::-webkit-scrollbar {
   width: 10%;
 }
 /* add inner box shadow it will look more scrollable */

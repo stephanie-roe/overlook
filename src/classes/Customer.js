@@ -51,6 +51,70 @@ class Customer {
     }, [])
     this.allRooms = result
   };
+  getFutureRooms() {
+    let today = new Date()
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    let date = `${yyyy}/${mm}/${dd}`
+    let currentDate = Date.parse(date);
+    this.allRooms.forEach((room) => {
+      let bookingDate = Date.parse(room.dateBooked);
+      if (bookingDate > currentDate) {
+        this.futureBookings.push(room)
+      }
+    })
+  }
+  getCurrentRoom() {
+    let today = new Date()
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    let date = `${yyyy}/${mm}/${dd}`
+    let currentDate = Date.parse(date);
+    this.allRooms.forEach((room) => {
+      let bookingDate = Date.parse(room.dateBooked);
+      if (bookingDate === currentDate) {
+        this.currentBookings.push(room)
+      }
+    })
+  }
+  getPastRooms() {
+    let today = new Date()
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    let date = `${yyyy}/${mm}/${dd}`
+    let currentDate = Date.parse(date);
+    this.allRooms.forEach((room) => {
+      let bookingDate = Date.parse(room.dateBooked);
+      if (bookingDate < currentDate) {
+        this.pastBookings.push(room)
+      }
+    })
+  }
+  sortBookingDates(roomsArray) {
+    let sortedDates = this[roomsArray].reduce((acc, room) => {
+      let parsed = Date.parse(room.dateBooked);
+      acc.push(parsed);
+      return acc
+    }, []);
+
+    sortedDates.sort((a, b) => {
+      return b - a
+    })
+
+    let result = sortedDates.reduce((acc, date) => {
+      this[roomsArray].forEach(room => {
+        let bookingDate = Date.parse(room.dateBooked)
+        if (date === bookingDate && !acc.includes(room)) {
+          acc.push(room)
+        }
+      })
+      return acc
+    }, [])
+     return this[roomsArray] = result
+  }
 };
 
 export default Customer;
