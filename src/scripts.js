@@ -19,13 +19,20 @@ const totalSpendTile = document.querySelector(".total");
 const bookingForm = document.querySelector(".booking-form");
 const bookNowButton = document.querySelector(".book-now-button");
 const userDashboard = document.querySelector(".user-dashboard");
-const bookingDashboard = document.querySelector(".booking-dashboard")
+const bookingDashboard = document.querySelector(".booking-dashboard");
+const submitDateButton = document.querySelector(".submit-date-button");
+
 //Event Listeners
 window.onload = (event) => loadWindow();
 
 bookNowButton.addEventListener("click", function() {
-  loadBookingDashboard()
-})
+  loadBookingDashboard();
+});
+
+submitDateButton.addEventListener("click", function() {
+//some function invoked in here to show avail rooms
+  getAvailableRooms(bookingsData)
+});
 
 //Event Handlers
 const loadWindow = () => {
@@ -184,7 +191,26 @@ const injectBookingForm = () => {
   let date = `${yyyy}-${mm}-${dd}`;
 
   bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?/</label>
-                              <input type="date" id="start" name="check-in" min=${date} defaultValue=${date}>
-                              <button class="submit-date-button">CHOOSE YOUR ROOM</button>`
+                              <input type="date" id="start" name="check-in" min=2022-04-01 value=${date}>`
 
-}
+};
+
+
+const getAvailableRooms = (bookingsData) => {
+  const dateInput = document.querySelector("#start");
+  let selectedDate = dateInput.value.replaceAll("-", "/");
+
+  const unbooked = bookingsData.filter((booking) => {
+    return booking.date !== selectedDate
+  });
+
+  const availableRooms = unbooked.reduce((arr, booking) => {
+    roomsData.forEach((room) => {
+      if (room.number === booking.roomNumber && !arr.includes(room)) {
+        arr.push(room)
+      }
+    })
+    return arr
+  }, []);
+  return availableRooms;
+};
