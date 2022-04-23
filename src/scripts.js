@@ -1,7 +1,7 @@
 // Imports
 import './css/styles.css';
 import './images/turing-logo.png';
-import {customersPromise, bookingsPromise, roomsPromise} from "./apiCalls";
+import {customersPromise, bookingsPromise, roomsPromise, postBooking} from "./apiCalls";
 import Customer from "./classes/Customer";
 
 
@@ -11,6 +11,7 @@ let bookingsData = [];
 let roomsData = [];
 let currentCustomer;
 let selectedDate;
+let selectedRoom;
 
 //Query Selectors
 const pastBookingsTile = document.querySelector(".past-booking-cards-container");
@@ -28,7 +29,11 @@ const roomChoiceCTA = document.querySelector(".room-choice-cta");
 const submitBookingButton = document.querySelector(".submit-booking-button");
 const selectedBookingTotal = document.querySelector(".selected-booking-total");
 const roomConfirmation = document.querySelector(".room-confirmation");
-const homeButton = document.querySelector(".user-dashboard-button")
+const homeButton = document.querySelector(".user-dashboard-button");
+const roomFiltersDropdown = document.querySelector(".dropdown-content");
+const roomFilterButton = document.querySelector(".filter-by-type");
+const filterContainer = document.querySelector(".dropdown-filter-rooms");
+
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -42,9 +47,6 @@ submitDateButton.addEventListener("click", function() {
 
 roomOptionsContainer.addEventListener("click", function(e) {
   if (e.target.parentElement.classList.contains("available-room-card")) {
-    // use the id of the card to match the room number
-    // inject the total of that room in the total area
-    console.log(e.target.id)
     showSelectedTotal(e.target.id)
   }
 });
@@ -53,6 +55,24 @@ homeButton.addEventListener("click", function() {
   hide([bookingDashboard, homeButton])
   show([userDashboard])
 })
+
+roomFilterButton.addEventListener("click", function() {
+  injectFilters()
+})
+
+submitBookingButton.addEventListener("click", function() {
+  // compileBooking()
+  postBooking(compileBooking())
+//when the book now button is clicked in the booking dashboard, i want to
+  // compile an object that will add represent the booking the user has just made
+  // add that booking to the customer's allBookings
+  //
+  // create a POST request
+  // refetch the customer and bookings data
+    // this will update the user's bookings, rooms, dom manipulation, etc
+    // this will also ensure bookings are not replicated
+})
+
 
 //Event Handlers
 const loadWindow = () => {
@@ -234,7 +254,7 @@ const getAvailableRooms = (bookingsData) => {
 
 const showAvailableRooms = (roomsData) => {
   roomOptionsContainer.innerHTML = ""
-  show([roomChoiceCTA, roomOptionsContainer])
+  show([roomChoiceCTA, roomOptionsContainer, filterContainer])
   const availableRooms = getAvailableRooms(bookingsData);
   availableRooms.forEach((room) => {
     roomOptionsContainer.innerHTML += `<div  class="available-room-card">
@@ -249,23 +269,64 @@ const showAvailableRooms = (roomsData) => {
 
 const showSelectedTotal = (id) => {
     const availableRooms = getAvailableRooms(bookingsData);
-    const selectedRoom = availableRooms.find((room) => {
+    selectedRoom = availableRooms.find((room) => {
       const roomNum = room.number.toString()
       return roomNum === id
     })
     show([selectedBookingTotal, roomConfirmation])
-    hide([roomChoiceCTA, roomOptionsContainer, dateInput])
+    hide([roomChoiceCTA, roomOptionsContainer, dateInput, filterContainer])
     const selectedTotal = currencyFormatter.format(selectedRoom.costPerNight)
     selectedBookingTotal.innerText = `Total: ${selectedTotal}`
     roomConfirmation.innerText = `You've selected the ${selectedRoom.roomType} on ${selectedDate}`
 }
 
+const injectFilters = () => {
+  roomFiltersDropdown.innerHTML = "";
+  const allRooms = getAvailableRooms(bookingsData);
+
+  const filters = allRooms.reduce((arr, room) => {
+    if(!arr.includes(room.roomType)) {
+      arr.push(room.roomType)
+    }
+    return arr
+  }, [])
+
+  filters.forEach((option) => {
+    const id = option.replaceAll(" ", "");
+    roomFiltersDropdown.innerHTML += `<p class="room-type" id=${id}>${option}</p>`
+  })
+}
+
+// const applyFilter = () => {
+// this would happen when someone clicks on the filter of thier choosing
+// we could do a filter over the all rooms and the room type would be the criteria
+// reset what is showing on the dom for that section and then iterate over the shortened array and inject that html
+// }
+
+// const clearFilters = () => {
+//   // this would be the event handler for a clear filters button
+//   // it would basically just reinvoke the method that showed all of the room options.
+// }
+
+
+
 const compileBooking = () => {
+  const id = getID(18)
+  const newBooking = { id: id,
+                      userID: currentCustomer.id,
+                      date: selectedDate,
+                      roomNumber: selectedRoom.number}
+  return newBooking
   // this would take all of the relevant info for a booking and bundle it into an obj to be added to currentCustomer.allBookings
   // this would be invoked when the user clicks the book now button on the booking dashboard
 }
 
-const postBooking = () => {
-  // this would reference the returned obj from the previous fn and reformat it for a successful post request
-  // the return of this is what would be passed in the post fn in our api call file
+const getID = () => {
+  let result = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const length = characters.length;
+  for (var i = 0; i < 18; i++) {
+    result += characters.charAt(Math.floor(Math.random() * length));
+  }
+  return result
 }
