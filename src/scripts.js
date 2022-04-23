@@ -97,7 +97,7 @@ const instantiateCustomer = (id) => {
 };
 
 const showPastBookings = () => {
-
+  pastBookingsTile.innerHTML = ""
   // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getPastRooms();
@@ -105,6 +105,7 @@ const showPastBookings = () => {
   // currentCustomer.pastBookings = currentCustomer.sortBookingDates("pastBookings")
 
   currentCustomer.pastBookings.forEach((room) => {
+
     const total = currencyFormatter.format(room.costPerNight);
     pastBookingsTile.innerHTML += `<section class="bookings-card">
                                 <div class="booking-card-header"
@@ -122,6 +123,7 @@ const showPastBookings = () => {
 
 const showCurrentBookings = () => {
   // currentCustomer.getCustomerBookings(bookingsData);
+  currentBookingsTile.innerHTML = ""
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getCurrentRoom();
   currentCustomer.sortBookingDates("currentBookings")
@@ -148,6 +150,7 @@ const showCurrentBookings = () => {
 }
 
 const showFutureBookings = () => {
+  futureBookingsTile.innerHTML = ""
   // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getFutureRooms();
@@ -196,6 +199,9 @@ const loadBookingDashboard = () => {
 };
 
 const injectBookingForm = () => {
+  hide([roomOptionsContainer, selectedBookingTotal, roomConfirmation, roomChoiceCTA])
+  show([dateInput])
+  bookingForm.innerHTML = ""
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, "0");
   let mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -227,7 +233,8 @@ const getAvailableRooms = (bookingsData) => {
 };
 
 const showAvailableRooms = (roomsData) => {
-  show([roomChoiceCTA])
+  roomOptionsContainer.innerHTML = ""
+  show([roomChoiceCTA, roomOptionsContainer])
   const availableRooms = getAvailableRooms(bookingsData);
   availableRooms.forEach((room) => {
     roomOptionsContainer.innerHTML += `<div  class="available-room-card">
