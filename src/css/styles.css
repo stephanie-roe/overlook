@@ -150,3 +150,7 @@ h3 {
   font-size: 10px;
   padding: 5px;
 }
+
+.hidden{
+  display: none;
+}

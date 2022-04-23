@@ -16,9 +16,16 @@ const pastBookingsTile = document.querySelector(".past-booking-cards-container")
 const currentBookingsTile = document.querySelector(".current-booking-cards-container");
 const futureBookingsTile = document.querySelector(".future-booking-cards-container");
 const totalSpendTile = document.querySelector(".total");
-
+const bookingForm = document.querySelector(".booking-form");
+const bookNowButton = document.querySelector(".book-now-button");
+const userDashboard = document.querySelector(".user-dashboard");
+const bookingDashboard = document.querySelector(".booking-dashboard")
 //Event Listeners
 window.onload = (event) => loadWindow();
+
+bookNowButton.addEventListener("click", function() {
+  loadBookingDashboard()
+})
 
 //Event Handlers
 const loadWindow = () => {
@@ -154,3 +161,30 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
+const show = elements => {
+  elements.forEach(element => element.classList.remove("hidden"));
+};
+
+const hide = elements => {
+  elements.forEach(element => element.classList.add("hidden"));
+};
+
+const loadBookingDashboard = () => {
+  hide([userDashboard])
+  show([bookingDashboard])
+  injectBookingForm()
+};
+
+const injectBookingForm = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  let date = `${yyyy}-${mm}-${dd}`;
+
+  bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?/</label>
+                              <input type="date" id="start" name="check-in" min=${date} defaultValue=${date}>
+                              <button class="submit-date-button">CHOOSE YOUR ROOM</button>`
+
+}
