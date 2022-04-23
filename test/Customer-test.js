@@ -140,6 +140,7 @@ describe("Customer", () => {
     expect(customer2.pastBookings[0].costPerNight).to.equal(207.24);
   });
 
+// sad path for sort function???? 
 
 });
 
