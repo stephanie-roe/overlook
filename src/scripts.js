@@ -21,6 +21,7 @@ const bookNowButton = document.querySelector(".book-now-button");
 const userDashboard = document.querySelector(".user-dashboard");
 const bookingDashboard = document.querySelector(".booking-dashboard");
 const submitDateButton = document.querySelector(".submit-date-button");
+const roomOptionsContainer = document.querySelector(".room-options-container");
 
 //Event Listeners
 window.onload = (event) => loadWindow();
@@ -31,7 +32,7 @@ bookNowButton.addEventListener("click", function() {
 
 submitDateButton.addEventListener("click", function() {
 //some function invoked in here to show avail rooms
-  getAvailableRooms(bookingsData)
+  showAvailableRooms()
 });
 
 //Event Handlers
@@ -214,3 +215,15 @@ const getAvailableRooms = (bookingsData) => {
   }, []);
   return availableRooms;
 };
+
+const showAvailableRooms = (roomsData) => {
+  const availableRooms = getAvailableRooms(bookingsData);
+
+  availableRooms.forEach((room) => {
+    roomOptionsContainer.innerHTML += `<section class="available-room-card">
+                                        <p>${room.roomType}</p>
+                                        <p>${room.bedSize} x ${room.numBeds}</p>
+                                        <p>ameneties: ${room.bidet}</p>
+                                      </section>`
+  });
+}
