@@ -22,7 +22,8 @@ const userDashboard = document.querySelector(".user-dashboard");
 const bookingDashboard = document.querySelector(".booking-dashboard");
 const submitDateButton = document.querySelector(".submit-date-button");
 const roomOptionsContainer = document.querySelector(".room-options-container");
-
+const dateInput = document.querySelector(".date-input");
+const roomChoiceCTA = document.querySelector(".room-choice-cta");
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -191,15 +192,16 @@ const injectBookingForm = () => {
   let yyyy = today.getFullYear();
   let date = `${yyyy}-${mm}-${dd}`;
 
-  bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?/</label>
+  bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?</label>
                               <input type="date" id="start" name="check-in" min=2022-04-01 value=${date}>`
 
 };
 
 
+
 const getAvailableRooms = (bookingsData) => {
   const dateInput = document.querySelector("#start");
-  let selectedDate = dateInput.value.replaceAll("-", "/");
+  const selectedDate = dateInput.value.replaceAll("-", "/");
 
   const unbooked = bookingsData.filter((booking) => {
     return booking.date !== selectedDate
@@ -217,10 +219,10 @@ const getAvailableRooms = (bookingsData) => {
 };
 
 const showAvailableRooms = (roomsData) => {
+  show([roomChoiceCTA])
   const availableRooms = getAvailableRooms(bookingsData);
-
   availableRooms.forEach((room) => {
-    roomOptionsContainer.innerHTML += `<section class="available-room-card">
+    roomOptionsContainer.innerHTML += `<section class="available-room-card" id="${room.number}">
                                         <p>${room.roomType}</p>
                                         <p>${room.bedSize} x ${room.numBeds}</p>
                                         <p>ameneties: ${room.bidet}</p>

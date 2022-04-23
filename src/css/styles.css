@@ -130,6 +130,7 @@ h3 {
   color: #2A1B10;
 }
 
+.available-room-card,
 .bookings-card {
   background-color: #FAF6F5;
   border-radius: 20px;
@@ -151,6 +152,95 @@ h3 {
   padding: 5px;
 }
 
-.hidden{
+
+.booking-form-container {
+  background: rgba(247, 97, 32, 0.65);
+  border-radius: 30px;
+  height: 60vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px 10px 0px 10px;
+}
+
+.date-input {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+
+.book-now-button,
+.submit-date-button,
+.submit-booking-button {
+  max-width: 300px;
+  max-height: 60px;
+  padding: 20px 40px;
+  border: none;
+  background-color: #FAF6F5;
+  border-radius: 30px;
+  margin: 5px 20px;
+
+}
+
+.room-options-container {
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.available-room-card {
+  width: 40%;
+}
+
+
+.booking-form {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 25px;
+}
+
+.available-booking-total {
+  padding: 0px 30px;
+  font-size: 25px;
+}
+
+input {
+  max-width: 300px;
+  background-color: #FAF6F5;
+  border-radius: 10px;
+  border: none;
+  padding: 20px 50px;
+  margin: 10px;
+}
+
+.submit-styling {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0px 20px 20px 0px;
+}
+
+.submit-date-button {
+  margin-top: 40px;
+}
+
+.submit-booking-button {
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.date-styling {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.hidden {
   display: none;
 }
