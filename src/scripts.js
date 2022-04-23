@@ -10,6 +10,7 @@ let customersData = [];
 let bookingsData = [];
 let roomsData = [];
 let currentCustomer;
+let selectedDate;
 
 //Query Selectors
 const pastBookingsTile = document.querySelector(".past-booking-cards-container");
@@ -24,6 +25,9 @@ const submitDateButton = document.querySelector(".submit-date-button");
 const roomOptionsContainer = document.querySelector(".room-options-container");
 const dateInput = document.querySelector(".date-input");
 const roomChoiceCTA = document.querySelector(".room-choice-cta");
+const submitBookingButton = document.querySelector(".submit-booking-button");
+const selectedBookingTotal = document.querySelector(".selected-booking-total");
+const roomConfirmation = document.querySelector(".room-confirmation");
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -32,9 +36,17 @@ bookNowButton.addEventListener("click", function() {
 });
 
 submitDateButton.addEventListener("click", function() {
-//some function invoked in here to show avail rooms
   showAvailableRooms()
 });
+
+roomOptionsContainer.addEventListener("click", function(e) {
+  if (e.target.parentElement.classList.contains("available-room-card")) {
+    // use the id of the card to match the room number
+    // inject the total of that room in the total area
+    console.log(e.target.id)
+    showSelectedTotal(e.target.id)
+  }
+})
 
 //Event Handlers
 const loadWindow = () => {
@@ -62,14 +74,6 @@ const loadWindow = () => {
     showFutureBookings();
     showTotal();
   })
-  // showData();
-  // setTimeout(() => instantiateCustomer(50), 2500)
-};
-
-const showData = () => {
-  // console.log("outside", customersData);
-  // console.log("outside", bookingsData);
-  // console.log("outside", roomsData);
 };
 
 const instantiateCustomer = (id) => {
@@ -197,11 +201,9 @@ const injectBookingForm = () => {
 
 };
 
-
-
 const getAvailableRooms = (bookingsData) => {
   const dateInput = document.querySelector("#start");
-  const selectedDate = dateInput.value.replaceAll("-", "/");
+  selectedDate = dateInput.value.replaceAll("-", "/");
 
   const unbooked = bookingsData.filter((booking) => {
     return booking.date !== selectedDate
@@ -222,10 +224,35 @@ const showAvailableRooms = (roomsData) => {
   show([roomChoiceCTA])
   const availableRooms = getAvailableRooms(bookingsData);
   availableRooms.forEach((room) => {
-    roomOptionsContainer.innerHTML += `<section class="available-room-card" id="${room.number}">
-                                        <p>${room.roomType}</p>
-                                        <p>${room.bedSize} x ${room.numBeds}</p>
-                                        <p>ameneties: ${room.bidet}</p>
-                                      </section>`
+    roomOptionsContainer.innerHTML += `<div  class="available-room-card">
+                                          <button id="${room.number}">
+                                          ${room.roomType}<br>
+                                          ${room.bedSize} x ${room.numBeds}<br>
+                                          ameneties: ${room.bidet}
+                                          </button>
+                                        </div>`
   });
+};
+
+const showSelectedTotal = (id) => {
+    const availableRooms = getAvailableRooms(bookingsData);
+    const selectedRoom = availableRooms.find((room) => {
+      const roomNum = room.number.toString()
+      return roomNum === id
+    })
+    show([selectedBookingTotal, roomConfirmation])
+    hide([roomChoiceCTA, roomOptionsContainer, dateInput])
+    const selectedTotal = currencyFormatter.format(selectedRoom.costPerNight)
+    selectedBookingTotal.innerText = `Total: ${selectedTotal}`
+    roomConfirmation.innerText = `You've selected the ${selectedRoom.roomType} on ${selectedDate}`
+}
+
+const compileBooking = () => {
+  // this would take all of the relevant info for a booking and bundle it into an obj to be added to currentCustomer.allBookings
+  // this would be invoked when the user clicks the book now button on the booking dashboard
+}
+
+const postBooking = () => {
+  // this would reference the returned obj from the previous fn and reformat it for a successful post request
+  // the return of this is what would be passed in the post fn in our api call file
 }
