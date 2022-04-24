@@ -18,6 +18,7 @@
   <main>
   <nav class="nav-bar">
     <p>Customer 50</p>
+    <button class="user-dashboard-button hidden">HOME</button>
   </nav>
   <section class="user-dashboard">
     <h2>My Bookings</h2>
@@ -29,7 +30,7 @@
       <section class="current-bookings">
         <h3>Current Bookings</h3>
         <div class="current-booking-cards-container"></div>
-        <button class="book-now">BOOK NOW</button>
+        <button class="book-now-button">BOOK NOW</button>
       </section>
       <section class="future-bookings">
         <h3>Future Bookings</h3>
@@ -37,6 +38,29 @@
       </section>
     </div>
     <section class="total">
+    </section>
+  </section>
+  <section class="booking-dashboard  hidden">
+    <h2>Book Your Stay</h2>
+    <section class="booking-form-container">
+      <div class="date-input">
+        <form class="booking-form"></form>
+        <div class="date-styling">
+          <button class="submit-date-button">CHOOSE YOUR ROOM</button>
+        </div>
+      </div>
+      <h3 class="room-choice-cta hidden">Select Your Lodging:</h3>
+      <div class="room-options-container"></div>
+      <div class="dropdown-filter-rooms hidden">
+        <button class="filter-by-type">FILTER</button>
+        <div class="dropdown-content">
+        </div>
+      </div>
+      <h3 class="room-confirmation"></h3>
+      <h3 class="selected-booking-total hidden">Total: $$$</h3>
+      <div class="submit-styling">
+        <button class="submit-booking-button">BOOK NOW</button>
+      </div>
     </section>
   </section>
 </main>
