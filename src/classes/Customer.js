@@ -16,7 +16,7 @@ class Customer {
   // }
   getCustomerBookings(bookings) {
     bookings.forEach((booking) => {
-      if (this.id === booking.userID) {
+      if (this.id === booking.userID && !this.allBookings.includes(booking)) {
         this.allBookings.push(booking);
       };
     });
@@ -60,7 +60,7 @@ class Customer {
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
-      if (bookingDate > currentDate) {
+      if (bookingDate > currentDate && !this.futureBookings.includes(room)) {
         this.futureBookings.push(room)
       }
     })
@@ -74,7 +74,7 @@ class Customer {
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
-      if (bookingDate === currentDate) {
+      if (bookingDate === currentDate && !this.currentBookings.includes(room)) {
         this.currentBookings.push(room)
       }
     })
@@ -88,7 +88,7 @@ class Customer {
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
-      if (bookingDate < currentDate) {
+      if (bookingDate < currentDate && !this.pastBookings.includes(room)) {
         this.pastBookings.push(room)
       }
     })
