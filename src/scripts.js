@@ -10,7 +10,7 @@ let customersData = [];
 let bookingsData = [];
 let roomsData = [];
 let currentCustomer;
-let selectedDate;
+let selectedDate = "";
 let selectedRoom;
 
 //Query Selectors
@@ -41,8 +41,15 @@ bookNowButton.addEventListener("click", function() {
   loadBookingDashboard();
 });
 
+bookingForm.addEventListener("click", function(e) {
+  if(e.target.parentElement.classList.contains("check-in-date"))
+  console.log("it works")
+  // captureDate()
+})
+
 submitDateButton.addEventListener("click", function() {
   showAvailableRooms()
+  // selectedDate = ""
 });
 
 roomOptionsContainer.addEventListener("click", function(e) {
@@ -73,14 +80,28 @@ roomFiltersDropdown.addEventListener("click", function(e) {
 
 submitBookingButton.addEventListener("click", function() {
   postBooking(compileBooking())
-  // create a POST request ✅
-  // refetch the customer and bookings data (? BUG MAY EXIST HERE)
-    // this will update the user's bookings, rooms, dom manipulation, etc (ONLY WORKS ON PAGE REFRESH)
-    // this will also ensure bookings are not replicated (SEEMS LIKE THIS HAS BEEN HANDLED- NO OVERLAPS)
+  showBookingConfirmation()
+  setTimeout(() => redirectHome(), "2000")
 })
 
 
 //Event Handlers
+const redirectHome = () => {
+  hide([bookingDashboard, homeButton])
+  show([userDashboard])
+  showPastBookings();
+  showCurrentBookings();
+  showFutureBookings();
+  showTotal();
+}
+
+const showBookingConfirmation = () => {
+  hide([selectedBookingTotal])
+  roomConfirmation.innerHTML = ""
+  roomConfirmation.innerHTML += `<h3>Booking Complete!</h3>`
+  hide([submitBookingButton])
+}
+
 const loadWindow = () => {
   Promise.all(
     [
@@ -217,6 +238,7 @@ const loadBookingDashboard = () => {
   hide([userDashboard])
   show([bookingDashboard, homeButton])
   injectBookingForm()
+  disableBookNowButton()
 };
 
 const injectBookingForm = () => {
@@ -230,11 +252,12 @@ const injectBookingForm = () => {
   let date = `${yyyy}-${mm}-${dd}`;
 
   bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?</label>
-                              <input type="date" id="start" name="check-in" min=${date} required>`
+                              <input class="check-in-date" type="date" id="start" name="check-in" min=${date}>`
 
 };
 
 const getAvailableRooms = (bookingsData) => {
+
   const dateInput = document.querySelector("#start");
   selectedDate = dateInput.value.replaceAll("-", "/");
 
@@ -251,15 +274,20 @@ const showAvailableRooms = (roomsData) => {
   roomOptionsContainer.innerHTML = ""
   show([roomChoiceCTA, roomOptionsContainer, filterContainer])
   const availableRooms = getAvailableRooms(bookingsData);
-  availableRooms.forEach((room) => {
-    roomOptionsContainer.innerHTML += `<div  class="available-room-card">
-                                          <button id="${room.number}">
-                                          ${room.roomType}<br>
-                                          ${room.bedSize} x ${room.numBeds}<br>
-                                          ameneties: ${room.bidet}
-                                          </button>
-                                        </div>`
-  });
+  if (selectedDate !== "") {
+    availableRooms.forEach((room) => {
+      roomOptionsContainer.innerHTML += `<div  class="available-room-card">
+                                            <button id="${room.number}">
+                                            ${room.roomType}<br>
+                                            ${room.bedSize} x ${room.numBeds}<br>
+                                            ameneties: ${room.bidet}
+                                            </button>
+                                          </div>`
+    });
+  } else {
+    hide([roomChoiceCTA, filterContainer])
+    roomOptionsContainer.innerHTML += `<h3 class="date-select-error-message">Please select a date to continue</h3>`
+  }
 };
 
 const showSelectedTotal = (id) => {
@@ -273,6 +301,7 @@ const showSelectedTotal = (id) => {
     const selectedTotal = currencyFormatter.format(selectedRoom.costPerNight)
     selectedBookingTotal.innerText = `Total: ${selectedTotal}`
     roomConfirmation.innerText = `You've selected the ${selectedRoom.roomType} on ${selectedDate}`
+    disableBookNowButton()
 }
 
 const injectFilters = () => {
@@ -292,7 +321,6 @@ const injectFilters = () => {
   })
 }
 
-//THESE FUNCTIONS NEED TO BE BUILD OUT TO ALLOW USER TO FILTER BY ROOM TYPE
 const applyFilter = (id) => {
   const availableRooms = getAvailableRooms(bookingsData);
   const filteredRooms = availableRooms.filter((room) => {
@@ -361,6 +389,27 @@ const refreshData = (jsonArray, id) => {
   }
   findCustomer()
 }
+
+// const disableDateSubmitButton = () => {
+//   if (selectedDate === "") {
+//     submitDateButton.disabled = true
+//   } else {
+//     submitDateButton.disabled = false
+//   }
+// }
+
+
+const disableBookNowButton = () => {
+  if (selectedDate === "" && selectedRoom === undefined) {
+    submitBookingButton.disabled = true
+  } else {
+    submitBookingButton.disabled = false
+  }
+}
+// const captureDate = () => {
+//   const dateInput = document.querySelector("#start");
+//   selectedDate = dateInput.value.replaceAll("-", "/");
+// }
 
 
 export { refreshBookings, currentCustomer };
