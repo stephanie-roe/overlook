@@ -430,4 +430,4 @@ const disableBookNowButton = () => {
 // }
 
 
-export { refreshBookings, currentCustomer };
+export { refreshBookings, currentCustomer, show };
