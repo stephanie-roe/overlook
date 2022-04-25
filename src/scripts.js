@@ -78,6 +78,13 @@ roomFiltersDropdown.addEventListener("click", function(e) {
   }
 })
 
+roomFiltersDropdown.addEventListener("keypress", function(e) {
+  if(e.target.classList.contains("room-type") && e.key === "Enter") {
+    displayFilteredRooms(e)
+    show([clearFilterButton])
+  }
+})
+
 clearFilterButton.addEventListener("click", function() {
   showAvailableRooms()
   hide([clearFilterButton])
@@ -102,6 +109,7 @@ const redirectHome = () => {
 
 const showBookingConfirmation = () => {
   hide([selectedBookingTotal])
+  show([roomConfirmation])
   roomConfirmation.innerHTML = ""
   roomConfirmation.innerHTML += `<h3>Booking Complete!</h3>`
   hide([submitBookingButton])
@@ -326,7 +334,7 @@ const injectFilters = () => {
 
   filters.forEach((option) => {
     const id = option.replaceAll(" ", "");
-    roomFiltersDropdown.innerHTML += `<p class="room-type" id=${id}>${option}</p>`
+    roomFiltersDropdown.innerHTML += `<p tabindex="0" class="room-type" id=${id}>${option}</p>`
   })
 }
 

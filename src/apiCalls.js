@@ -1,4 +1,4 @@
-import { refreshBookings, currentCustomer} from "./scripts.js";
+import { refreshBookings, currentCustomer, show} from "./scripts.js";
 
 let errorMessage = document.querySelector(".error-message-post-unsuccessful")
 
@@ -34,6 +34,7 @@ let postBooking = (obj) => {
   })
   .catch((error) => {
     console.log("Oh No!");
+    show([errorMessage])
     errorMessage.innerText = "Apologies, booking unsuccessful. Please select a date and room and try again."
     return errorMessage
   });
