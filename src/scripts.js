@@ -38,8 +38,8 @@ const loginContainer = document.querySelector(".customer-login-container");
 const loginButton = document.querySelector(".submit-login-button");
 const username = document.querySelector("#username");
 const password = document.querySelector("#password");
-const nav = document.querySelector(".nav-bar")
-
+const nav = document.querySelector(".nav-bar");
+const customerName = document.querySelector(".customer-welcome")
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -207,6 +207,10 @@ const commenceLogin = () => {
   showCurrentBookings();
   showFutureBookings();
   showTotal();
+  const customerNames = currentCustomer.name.split(" ")
+  const firstName = customerNames[0]
+  customerName.innerHTML = ""
+  customerName.innerHTML = `Welcome, ${firstName}`
 }
 
 
