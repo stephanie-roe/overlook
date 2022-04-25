@@ -16,11 +16,24 @@
     </div>
   </header>
   <main>
-  <nav class="nav-bar">
+  <div class="customer-login-container">
+    <h2>Hello, Welcome</h2>
+    <section class="login">
+      <h3>Log in</h3>
+      <form>
+        <label class="login-label" for="username"></label>
+        <input type="text" id="username" name="username" placeholder="username" required>
+        <label class="login-label" for="password"></label>
+        <input type="password" id="pass" name="password" placeholder="password" required>
+        <button class="submit-login-button">LOG IN</button>
+      </form>
+    </section>
+  </div>
+  <nav class="nav-bar hidden">
     <p>Customer 50</p>
     <button class="user-dashboard-button hidden">HOME</button>
   </nav>
-  <section class="user-dashboard">
+  <section class="user-dashboard hidden">
     <h2>My Bookings</h2>
     <div class="booking-tiles-container">
       <section class="past-bookings">
