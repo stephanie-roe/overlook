@@ -73,7 +73,6 @@ roomFilterButton.addEventListener("click", function() {
 
 roomFiltersDropdown.addEventListener("click", function(e) {
   if(e.target.classList.contains("room-type")) {
-    // applyFilter(e.target.id)
     displayFilteredRooms(e)
     show([clearFilterButton])
   }
@@ -352,7 +351,8 @@ const displayFilteredRooms = (e) => {
                                           </button>
                                         </div>`
   })
-  roomOptionsContainer.innerHTML += filteredRoomsHTML;
+  let header = `<h3>Available On ${selectedDate}: ${filteredRooms[0].roomType}`
+  roomOptionsContainer.innerHTML += header + filteredRoomsHTML;
 }
 
 // const clearFilters = () => {
