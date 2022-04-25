@@ -1,5 +1,7 @@
 import { refreshBookings, currentCustomer} from "./scripts.js";
 
+let errorMessage = document.querySelector(".error-message-post-unsuccessful")
+
 const getPromise = (url) => {
   return fetch(url)
   .then(response => response.json())
@@ -25,15 +27,15 @@ let postBooking = (obj) => {
     }
   })
   .then((booking) => {
-    // errorMessage.innerText = ""
+    errorMessage.innerText = ""
     let id = currentCustomer.id
     refreshBookings(id)
     console.log("Success!")
   })
   .catch((error) => {
     console.log("Oh No!");
-    // errorMessage.innerText = "Apologies, booking unsuccessful"
-    // return errorMessage
+    errorMessage.innerText = "Apologies, booking unsuccessful. Please select a date and room and try again."
+    return errorMessage
   });
 };
 
