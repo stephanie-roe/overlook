@@ -1,7 +1,7 @@
 // Imports
 import './css/styles.css';
 import './images/turing-logo.png';
-import {customersPromise, bookingsPromise, roomsPromise, postBooking} from "./apiCalls";
+import {customersPromise, bookingsPromise, roomsPromise, postBooking, getPromise} from "./apiCalls";
 import Customer from "./classes/Customer";
 
 
@@ -54,6 +54,10 @@ roomOptionsContainer.addEventListener("click", function(e) {
 homeButton.addEventListener("click", function() {
   hide([bookingDashboard, homeButton])
   show([userDashboard])
+  showPastBookings();
+  showCurrentBookings();
+  showFutureBookings();
+  showTotal();
 })
 
 roomFilterButton.addEventListener("click", function() {
@@ -61,22 +65,16 @@ roomFilterButton.addEventListener("click", function() {
 })
 
 submitBookingButton.addEventListener("click", function() {
-  // compileBooking()
   postBooking(compileBooking())
-//when the book now button is clicked in the booking dashboard, i want to
-  // compile an object that will add represent the booking the user has just made
-  // add that booking to the customer's allBookings
-  //
-  // create a POST request
-  // refetch the customer and bookings data
-    // this will update the user's bookings, rooms, dom manipulation, etc
-    // this will also ensure bookings are not replicated
+  // create a POST request ✅
+  // refetch the customer and bookings data (? BUG MAY EXIST HERE)
+    // this will update the user's bookings, rooms, dom manipulation, etc (ONLY WORKS ON PAGE REFRESH)
+    // this will also ensure bookings are not replicated (SEEMS LIKE THIS HAS BEEN HANDLED- NO OVERLAPS)
 })
 
 
 //Event Handlers
 const loadWindow = () => {
-//promise.all can be outside of the function, can be set to a variable.
   Promise.all(
     [
       customersPromise,
@@ -104,8 +102,8 @@ const loadWindow = () => {
 
 const instantiateCustomer = (id) => {
 //match up id from login to the id in customersData and use that to set new customer obj, which will instantiate our current customer.
-// parseInt to a number to cmopare the customers username and the id number
-//eventually when api is incorporated, this will move into .then
+// if customer.username === username, customer id will be set to global variable of id and that is what will be passed into the arg
+  // will probably need a findcustomerbyid function before this to set that id to then be passed in when we instantiate
   let customerArg;
   customersData.forEach((customer) => {
     if (customer.id === id) {
@@ -118,12 +116,9 @@ const instantiateCustomer = (id) => {
 
 const showPastBookings = () => {
   pastBookingsTile.innerHTML = ""
-  // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getPastRooms();
   currentCustomer.sortBookingDates("pastBookings")
-  // currentCustomer.pastBookings = currentCustomer.sortBookingDates("pastBookings")
-
   currentCustomer.pastBookings.forEach((room) => {
 
     const total = currencyFormatter.format(room.costPerNight);
@@ -142,7 +137,6 @@ const showPastBookings = () => {
 }
 
 const showCurrentBookings = () => {
-  // currentCustomer.getCustomerBookings(bookingsData);
   currentBookingsTile.innerHTML = ""
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getCurrentRoom();
@@ -171,7 +165,6 @@ const showCurrentBookings = () => {
 
 const showFutureBookings = () => {
   futureBookingsTile.innerHTML = ""
-  // currentCustomer.getCustomerBookings(bookingsData);
   currentCustomer.getAllRooms(roomsData);
   currentCustomer.getFutureRooms();
   currentCustomer.sortBookingDates("futureBookings")
@@ -194,6 +187,7 @@ const showFutureBookings = () => {
 
 const showTotal = () => {
   totalSpendTile.innerHTML = ""
+  currentCustomer.amountSpent = 0
   const total = currentCustomer.getTotalSpend(roomsData);
   const displayTotal = currencyFormatter.format(total)
   totalSpendTile.innerHTML += `<h3 class="total-spent">Total: ${displayTotal}</h3>`
@@ -229,7 +223,7 @@ const injectBookingForm = () => {
   let date = `${yyyy}-${mm}-${dd}`;
 
   bookingForm.innerHTML +=  `<label for="check-in">When will you be arriving?</label>
-                              <input type="date" id="start" name="check-in" min=2022-04-01 value=${date}>`
+                              <input type="date" id="start" name="check-in" min=${date} required>`
 
 };
 
@@ -237,18 +231,12 @@ const getAvailableRooms = (bookingsData) => {
   const dateInput = document.querySelector("#start");
   selectedDate = dateInput.value.replaceAll("-", "/");
 
-  const unbooked = bookingsData.filter((booking) => {
-    return booking.date !== selectedDate
-  });
+  const booked = bookingsData.filter((booking) => {
+    return booking.date === selectedDate
+  }).map((booking) => booking.roomNumber)
 
-  const availableRooms = unbooked.reduce((arr, booking) => {
-    roomsData.forEach((room) => {
-      if (room.number === booking.roomNumber && !arr.includes(room)) {
-        arr.push(room)
-      }
-    })
-    return arr
-  }, []);
+  const availableRooms = roomsData.filter((room) => (!booked.includes(room.number)))
+
   return availableRooms;
 };
 
@@ -297,6 +285,7 @@ const injectFilters = () => {
   })
 }
 
+//THESE FUNCTIONS NEED TO BE BUILD OUT TO ALLOW USER TO FILTER BY ROOM TYPE
 // const applyFilter = () => {
 // this would happen when someone clicks on the filter of thier choosing
 // we could do a filter over the all rooms and the room type would be the criteria
@@ -309,24 +298,44 @@ const injectFilters = () => {
 // }
 
 
-
 const compileBooking = () => {
-  const id = getID(18)
-  const newBooking = { id: id,
-                      userID: currentCustomer.id,
+  const newBooking = { userID: currentCustomer.id,
                       date: selectedDate,
                       roomNumber: selectedRoom.number}
   return newBooking
-  // this would take all of the relevant info for a booking and bundle it into an obj to be added to currentCustomer.allBookings
-  // this would be invoked when the user clicks the book now button on the booking dashboard
 }
 
-const getID = () => {
-  let result = "";
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const length = characters.length;
-  for (var i = 0; i < 18; i++) {
-    result += characters.charAt(Math.floor(Math.random() * length));
+
+const refreshBookings = (id) => {
+  Promise.all(
+    [
+      getPromise("http://localhost:3001/api/v1/bookings")
+    ]
+  ).then(jsonArray => {
+    bookingsData = [];
+    jsonArray[0].bookings.forEach(booking => {
+      bookingsData.push(booking);
+    });
+    refreshData(jsonArray, id);
+  })
+};
+
+const refreshData = (jsonArray, id) => {
+  const url = "http://localhost:3001/api/v1/bookings"
+  getPromise(url)
+  jsonArray[0].bookings.forEach(booking => {
+    bookingsData.push(booking);
+  });
+  const findCustomer = () => {
+    customersData.forEach((customer1) => {
+      if (customer1.id === id) {
+        currentCustomer.allBookings = [];
+        currentCustomer.getCustomerBookings(bookingsData);
+      }
+    })
   }
-  return result
+  findCustomer()
 }
+
+
+export { refreshBookings, currentCustomer };
