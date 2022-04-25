@@ -78,6 +78,13 @@ roomFiltersDropdown.addEventListener("click", function(e) {
   }
 })
 
+roomFiltersDropdown.addEventListener("keypress", function(e) {
+  if(e.target.classList.contains("room-type") && e.key === "Enter") {
+    displayFilteredRooms(e)
+    show([clearFilterButton])
+  }
+})
+
 clearFilterButton.addEventListener("click", function() {
   showAvailableRooms()
   hide([clearFilterButton])
@@ -102,6 +109,7 @@ const redirectHome = () => {
 
 const showBookingConfirmation = () => {
   hide([selectedBookingTotal])
+  show([roomConfirmation])
   roomConfirmation.innerHTML = ""
   roomConfirmation.innerHTML += `<h3>Booking Complete!</h3>`
   hide([submitBookingButton])
@@ -155,7 +163,7 @@ const showPastBookings = () => {
   currentCustomer.pastBookings.forEach((room) => {
 
     const total = currencyFormatter.format(room.costPerNight);
-    pastBookingsTile.innerHTML += `<section class="bookings-card">
+    pastBookingsTile.innerHTML += `<section role="contentinfo" class="bookings-card">
                                 <div class="booking-card-header"
                                   <p class="date">${room.dateBooked}</p>
                                   <p class="booking-details">Room Number: ${room.number}</p>
@@ -176,13 +184,13 @@ const showCurrentBookings = () => {
   currentCustomer.sortBookingDates("currentBookings")
 
   if (!currentCustomer.currentBookings.length) {
-    currentBookingsTile.innerHTML += `<section class="book-now-cta">
+    currentBookingsTile.innerHTML += `<section role="contentinfo" class="book-now-cta">
                                       <p class="book-now-message">No active bookings, we hope to see you soon!</p>
                                       </section>`
   } else if (currentCustomer.currentBookings.length > 0) {
     currentCustomer.currentBookings.forEach((room) => {
       const total = currencyFormatter.format(room.costPerNight);
-      currentBookingsTile.innerHTML += `<section class="bookings-card">
+      currentBookingsTile.innerHTML += `<section role="contentinfo" class="bookings-card">
                                   <div class="booking-card-header"
                                     <p class="date">${room.dateBooked}</p>
                                     <p class="booking-details">Room Number: ${room.number}</p>
@@ -204,7 +212,7 @@ const showFutureBookings = () => {
 
   currentCustomer.futureBookings.forEach((room) => {
     const total = currencyFormatter.format(room.costPerNight);
-    futureBookingsTile.innerHTML += `<section class="bookings-card">
+    futureBookingsTile.innerHTML += `<section role="contentinfo" class="bookings-card">
                                 <div class="booking-card-header"
                                   <p class="date">${room.dateBooked}</p>
                                   <p class="booking-details">Room Number: ${room.number}</p>
@@ -326,7 +334,7 @@ const injectFilters = () => {
 
   filters.forEach((option) => {
     const id = option.replaceAll(" ", "");
-    roomFiltersDropdown.innerHTML += `<p class="room-type" id=${id}>${option}</p>`
+    roomFiltersDropdown.innerHTML += `<p tabindex="0" class="room-type" id=${id}>${option}</p>`
   })
 }
 
@@ -422,4 +430,4 @@ const disableBookNowButton = () => {
 // }
 
 
-export { refreshBookings, currentCustomer };
+export { refreshBookings, currentCustomer, show };
