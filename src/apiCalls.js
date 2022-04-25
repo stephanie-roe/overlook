@@ -26,7 +26,6 @@ let postBooking = (obj) => {
   })
   .then((booking) => {
     // errorMessage.innerText = ""
-    // invoke the refresh function here
     let id = currentCustomer.id
     refreshBookings(id)
     console.log("Success!")
