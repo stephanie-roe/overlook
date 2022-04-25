@@ -16,25 +16,38 @@
     </div>
   </header>
   <main>
-  <nav class="nav-bar">
-    <p>Customer 50</p>
+  <div class="customer-login-container">
+    <h2>Hello, Welcome</h2>
+    <section class="login">
+      <h3>Log in</h3>
+      <form>
+        <label class="login-label" for="username"></label>
+        <input type="text" id="username" name="username" placeholder="username" required>
+        <label class="login-label" for="password"></label>
+        <input type="password" id="password" name="password" placeholder="password" required>
+        <button class="submit-login-button">LOG IN</button>
+      </form>
+    </section>
+  </div>
+  <nav class="nav-bar hidden">
+    <p class="customer-welcome">Welcome, [Customer Name Here]</p>
     <button class="user-dashboard-button hidden">HOME</button>
   </nav>
-  <section class="user-dashboard">
+  <section class="user-dashboard hidden">
     <h2>My Bookings</h2>
     <div class="booking-tiles-container">
       <section class="past-bookings">
         <h3>Past Bookings</h3>
-        <div class="past-booking-cards-container"></div>
+        <div tabindex="0" class="past-booking-cards-container"></div>
       </section>
       <section class="current-bookings">
         <h3>Current Bookings</h3>
-        <div class="current-booking-cards-container"></div>
+        <div tabindex="0" class="current-booking-cards-container"></div>
         <button class="book-now-button">BOOK NOW</button>
       </section>
       <section class="future-bookings">
         <h3>Future Bookings</h3>
-        <div class="future-booking-cards-container"></div>
+        <div tabindex="0" class="future-booking-cards-container"></div>
       </section>
     </div>
     <section class="total">

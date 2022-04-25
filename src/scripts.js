@@ -11,7 +11,7 @@ let bookingsData = [];
 let roomsData = [];
 let currentCustomer;
 let selectedDate = "";
-let selectedRoom;
+let selectedRoom = null;
 
 //Query Selectors
 const pastBookingsTile = document.querySelector(".past-booking-cards-container");
@@ -33,9 +33,22 @@ const homeButton = document.querySelector(".user-dashboard-button");
 const roomFiltersDropdown = document.querySelector(".dropdown-content");
 const roomFilterButton = document.querySelector(".filter-by-type");
 const filterContainer = document.querySelector(".dropdown-filter-rooms");
-const clearFilterButton = document.querySelector(".clear-filters")
+const clearFilterButton = document.querySelector(".clear-filters");
+const loginContainer = document.querySelector(".customer-login-container");
+const loginButton = document.querySelector(".submit-login-button");
+const username = document.querySelector("#username");
+const password = document.querySelector("#password");
+const nav = document.querySelector(".nav-bar");
+const customerName = document.querySelector(".customer-welcome")
 //Event Listeners
 window.onload = (event) => loadWindow();
+
+loginButton.addEventListener("click", function() {
+  event.preventDefault()
+  verifyCredentials()
+  // verifyUsername(customersData)
+  // console.log(customersData)
+})
 
 bookNowButton.addEventListener("click", function() {
   loadBookingDashboard();
@@ -94,6 +107,8 @@ submitBookingButton.addEventListener("click", function() {
   postBooking(compileBooking())
   showBookingConfirmation()
   setTimeout(() => redirectHome(), "2000")
+  selectedDate = ""
+  selectedRoom = null
 })
 
 
@@ -132,14 +147,72 @@ const loadWindow = () => {
     jsonArray[2].rooms.forEach(room => {
       roomsData.push(room);
     });
-    instantiateCustomer(50);
-    currentCustomer.getCustomerBookings(bookingsData);
-    showPastBookings();
-    showCurrentBookings();
-    showFutureBookings();
-    showTotal();
+    // instantiateCustomer(50);
+    // currentCustomer.getCustomerBookings(bookingsData);
+    // showPastBookings();
+    // showCurrentBookings();
+    // showFutureBookings();
+    // showTotal();
   })
 };
+
+// LOGIN FUNCTIONALITY
+// add event listener to log in button
+// this will capture the user's username and password, which only needs to equal overlook2021
+// iterate over customersData, using the username as comparison (find)
+// when they match - return obj is set to currentCustomer global variable
+// ERRORHANDLING HERE- IF THEY LOGIN W A CUSTOMER NUMBER NOT FOUND, SHOW AN ERROR MESSAGE
+// SAME IF PW IS INCORRECT
+
+// another function will hide the login screen,
+// include the promise.all and all other window load funcs
+// customer id in instantiateCustomer will just be currentCustomer.id
+
+// MAYBE ACTUALLY KEEP THE FIRST FETCH IN THE PAGE LOAD AND THEN MOVE THE INITIALIZING FUNCS WHEN LOGGED IN
+
+const verifyUsername = (customersData) => {
+  const usernameEntered = username.value
+  const letters = usernameEntered.slice(0, usernameEntered.search(/\d/))
+  const userID = Number(usernameEntered.replace(letters, ""))
+
+  return userID
+}
+
+const verifyPassword = () => {
+  const passwordEntered = password.value
+  console.log(passwordEntered)
+  if (passwordEntered === "overlook2021") {
+    return true
+  }
+}
+
+const verifyCredentials = () => {
+  const userID = verifyUsername(customersData)
+
+  if (userID && verifyPassword()) {
+    console.log("it works!!!")
+    instantiateCustomer(userID);
+    commenceLogin()
+    // instantiateCustomer(userID)
+    // invoke login function - hide login page, invoke those methods that are currently in my promise.all show user dashboard
+  }
+  // NEED TO ADD AN ELSE TO DO ERROR HANDLING HERE
+}
+
+const commenceLogin = () => {
+  hide([loginContainer])
+  show([userDashboard, nav])
+  currentCustomer.getCustomerBookings(bookingsData);
+  showPastBookings();
+  showCurrentBookings();
+  showFutureBookings();
+  showTotal();
+  const customerNames = currentCustomer.name.split(" ")
+  const firstName = customerNames[0]
+  customerName.innerHTML = ""
+  customerName.innerHTML = `Welcome, ${firstName}`
+}
+
 
 const instantiateCustomer = (id) => {
 //match up id from login to the id in customersData and use that to set new customer obj, which will instantiate our current customer.
@@ -249,7 +322,7 @@ const hide = elements => {
 
 const loadBookingDashboard = () => {
   hide([userDashboard])
-  show([bookingDashboard, homeButton])
+  show([bookingDashboard, homeButton, submitBookingButton])
   injectBookingForm()
   disableBookNowButton()
 };
@@ -313,7 +386,7 @@ const showSelectedTotal = (id) => {
       const roomNum = room.number.toString()
       return roomNum === id
     })
-    show([selectedBookingTotal, roomConfirmation])
+    show([selectedBookingTotal, roomConfirmation, submitBookingButton])
     hide([roomChoiceCTA, roomOptionsContainer, dateInput, filterContainer])
     const selectedTotal = currencyFormatter.format(selectedRoom.costPerNight)
     selectedBookingTotal.innerText = `Total: ${selectedTotal}`
@@ -418,7 +491,7 @@ const refreshData = (jsonArray, id) => {
 
 
 const disableBookNowButton = () => {
-  if (selectedDate === "" && selectedRoom === undefined) {
+  if (selectedDate === "" && selectedRoom === null) {
     submitBookingButton.disabled = true
   } else {
     submitBookingButton.disabled = false
