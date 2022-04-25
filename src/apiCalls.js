@@ -1,3 +1,5 @@
+import { refreshBookings, currentCustomer} from "./scripts.js";
+
 const getPromise = (url) => {
   return fetch(url)
   .then(response => response.json())
@@ -24,6 +26,9 @@ let postBooking = (obj) => {
   })
   .then((booking) => {
     // errorMessage.innerText = ""
+    // invoke the refresh function here
+    let id = currentCustomer.id
+    refreshBookings(id)
     console.log("Success!")
   })
   .catch((error) => {
@@ -33,4 +38,4 @@ let postBooking = (obj) => {
   });
 };
 
-export {customersPromise, bookingsPromise, roomsPromise, postBooking};
+export {customersPromise, bookingsPromise, roomsPromise, postBooking, getPromise};
