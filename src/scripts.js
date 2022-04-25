@@ -347,7 +347,7 @@ const displayFilteredRooms = (e) => {
                                           <button id="${room.number}">
                                           ${room.roomType}<br>
                                           ${room.bedSize} x ${room.numBeds}<br>
-                                          ameneties: ${room.bidet}
+                                          amenities: ${room.bidet}
                                           </button>
                                         </div>`
   })
