@@ -64,6 +64,13 @@ roomFilterButton.addEventListener("click", function() {
   injectFilters()
 })
 
+roomFiltersDropdown.addEventListener("click", function(e) {
+  if(e.target.classList.contains("room-type")) {
+    // applyFilter(e.target.id)
+    displayFilteredRooms(e)
+  }
+})
+
 submitBookingButton.addEventListener("click", function() {
   postBooking(compileBooking())
   // create a POST request ✅
@@ -286,11 +293,29 @@ const injectFilters = () => {
 }
 
 //THESE FUNCTIONS NEED TO BE BUILD OUT TO ALLOW USER TO FILTER BY ROOM TYPE
-// const applyFilter = () => {
-// this would happen when someone clicks on the filter of thier choosing
-// we could do a filter over the all rooms and the room type would be the criteria
-// reset what is showing on the dom for that section and then iterate over the shortened array and inject that html
-// }
+const applyFilter = (id) => {
+  const availableRooms = getAvailableRooms(bookingsData);
+  const filteredRooms = availableRooms.filter((room) => {
+    return id === room.roomType.replaceAll(" ", "")
+  })
+  return filteredRooms
+}
+
+const displayFilteredRooms = (e) => {
+  const filteredRooms = applyFilter(e.target.id)
+  roomOptionsContainer.innerHTML = ""
+  let filteredRoomsHTML = ""
+  filteredRooms.forEach((room) => {
+    filteredRoomsHTML += `<div class="available-room-card">
+                                          <button id="${room.number}">
+                                          ${room.roomType}<br>
+                                          ${room.bedSize} x ${room.numBeds}<br>
+                                          ameneties: ${room.bidet}
+                                          </button>
+                                        </div>`
+  })
+  roomOptionsContainer.innerHTML += filteredRoomsHTML;
+}
 
 // const clearFilters = () => {
 //   // this would be the event handler for a clear filters button
