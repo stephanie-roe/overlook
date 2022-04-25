@@ -1,6 +1,8 @@
 class Customer {
   constructor(customer) {
     this.id = customer.id;
+    this.username = `customer${customer.id}`
+    //NEED TO TEST FOR THIS
     this.name = customer.name;
     this.allBookings = [];
     // booking objs - might not need this?
