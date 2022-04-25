@@ -33,7 +33,7 @@ const homeButton = document.querySelector(".user-dashboard-button");
 const roomFiltersDropdown = document.querySelector(".dropdown-content");
 const roomFilterButton = document.querySelector(".filter-by-type");
 const filterContainer = document.querySelector(".dropdown-filter-rooms");
-
+const clearFilterButton = document.querySelector(".clear-filters")
 //Event Listeners
 window.onload = (event) => loadWindow();
 
@@ -75,7 +75,13 @@ roomFiltersDropdown.addEventListener("click", function(e) {
   if(e.target.classList.contains("room-type")) {
     // applyFilter(e.target.id)
     displayFilteredRooms(e)
+    show([clearFilterButton])
   }
+})
+
+clearFilterButton.addEventListener("click", function() {
+  showAvailableRooms()
+  hide([clearFilterButton])
 })
 
 submitBookingButton.addEventListener("click", function() {
@@ -275,8 +281,10 @@ const showAvailableRooms = (roomsData) => {
   show([roomChoiceCTA, roomOptionsContainer, filterContainer])
   const availableRooms = getAvailableRooms(bookingsData);
   if (selectedDate !== "") {
+    hide([dateInput])
+    let cards = ""
     availableRooms.forEach((room) => {
-      roomOptionsContainer.innerHTML += `<div  class="available-room-card">
+      cards += `<div  class="available-room-card">
                                             <button id="${room.number}">
                                             ${room.roomType}<br>
                                             ${room.bedSize} x ${room.numBeds}<br>
@@ -284,6 +292,8 @@ const showAvailableRooms = (roomsData) => {
                                             </button>
                                           </div>`
     });
+    const dateConfirmation = `<h3> Rooms Available on ${selectedDate} </h3>`
+    roomOptionsContainer.innerHTML += dateConfirmation + cards
   } else {
     hide([roomChoiceCTA, filterContainer])
     roomOptionsContainer.innerHTML += `<h3 class="date-select-error-message">Please select a date to continue</h3>`
