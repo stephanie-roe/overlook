@@ -22,26 +22,36 @@ h1 {
   color: #F76120;
   font-weight: 600;
 }
-/* Nav-----------------------------------------------------------------------*/
 
+/* Nav-----------------------------------------------------------------------*/
 nav {
   border-bottom: solid 2px #2A1B10;
   border-top: solid 2px #2A1B10;
   margin: 30px 10px;
   width: 80vw;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
 }
 
 p {
-  padding: 15px 5px;
+  padding: 15px 30px;
   font-weight: 500;
   font-size: 20px;
   color: #2A1B10;
 }
 
-/* Body----------------------------------------------------------------------*/
+.user-dashboard-button {
+  background: rgba(247, 97, 32, 0.73);
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: 400;
+  margin: 10px;
+}
 
+/* Body----------------------------------------------------------------------*/
 body {
   background-color: #FAF6F5;
 }
@@ -53,17 +63,75 @@ main {
   align-items: center;
 }
 
+h2 {
+  font-size: 35px;
+  font-weight: 500;
+  color: #2A1B10;
+}
+
+h3 {
+  font-weight: 500;
+  color: #2A1B10;
+  padding-top: 20px;
+}
+
+/* Login Page--------------------------------------------------------------- */
+.customer-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  width: 100vw;
+}
+
+.login {
+  background: rgba(247, 97, 32, 0.73);
+  height: 60vh;
+  width: 60vw;
+  border-radius: 30px;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.credential-inputs {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-cta {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 20px
+}
+
+.submit-login-button {
+  background-color: #FAF6F5;
+  border: none;
+  border-radius: 30px;
+  padding: 20px 150px;
+  margin-top: 50px;
+  font-weight: 400;
+}
+
+#username,
+#password {
+  margin: 20px;
+  width: 100%;
+}
+
+/* User Dashboard---------------------------------------------------------------- */
 .user-dashboard {
   display: flex;
   flex-direction: column;
   /* justify-content: center;
   align-items: baseline; */
-}
-
-h2 {
-  font-size: 35px;
-  font-weight: 500;
-  color: #2A1B10;
 }
 
 .booking-tiles-container {
@@ -87,7 +155,6 @@ h2 {
   align-items: center;
 }
 
-
 .past-booking-cards-container,
 .current-booking-cards-container,
 .future-booking-cards-container {
@@ -106,7 +173,6 @@ h2 {
 }
 /* add inner box shadow it will look more scrollable */
 
-
 .total {
   background: rgba(247, 97, 32, 0.8);
   border-radius: 30px;
@@ -117,25 +183,11 @@ h2 {
   align-items: center;
 }
 
-h3 {
-  font-weight: 500;
-  color: #2A1B10;
-  padding-top: 20px;
-}
-
 .total-spent {
   margin-left: 30px;
   padding-top: 60px;
   font-size: 25px;
   color: #2A1B10;
-}
-
-.available-room-card,
-.bookings-card {
-  background-color: #FAF6F5;
-  border-radius: 20px;
-  padding: 10px;
-  margin: 10px 0px;
 }
 
 .booking-card-header {
@@ -152,6 +204,14 @@ h3 {
   padding: 5px;
 }
 
+/* Booking Dashboard---------------------------------------------------------- */
+.available-room-card,
+.bookings-card {
+  background-color: #FAF6F5;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px 0px;
+}
 
 .booking-form-container {
   background: rgba(247, 97, 32, 0.65);
@@ -170,6 +230,7 @@ h3 {
   /* justify-content: space-between; */
 }
 
+
 .book-now-button,
 .submit-date-button,
 .submit-booking-button {
@@ -180,11 +241,37 @@ h3 {
   background-color: #FAF6F5;
   border-radius: 30px;
   margin: 5px 20px;
+}
 
+.clear-filters,
+.filter-by-type {
+  border: none;
+  background-color: #FAF6F5;
+  border-radius: 30px;
+  max-width: 500px;
+  padding: 10px 20px;
+  margin: 5px 20px;
+  font-size: 10px
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* width: 30%; */
+}
+
+.booking-dashboard-styling {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40vh;
 }
 
 .room-options-container {
   overflow-y: scroll;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -192,9 +279,21 @@ h3 {
 }
 
 .available-room-card {
-  width: 40%;
+  max-width: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.room-selector {
+  border-radius: 30px;
+  border: none;
+  padding: 30px;
+}
+
+.room-choice-cta {
+  margin: 20px;
+}
 
 .booking-form {
   margin: 20px;

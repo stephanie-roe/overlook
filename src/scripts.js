@@ -365,14 +365,14 @@ const showAvailableRooms = (roomsData) => {
     let cards = ""
     availableRooms.forEach((room) => {
       cards += `<div  class="available-room-card">
-                                            <button id="${room.number}">
+                                            <button class="room-selector" id="${room.number}">
                                             ${room.roomType}<br>
                                             ${room.bedSize} x ${room.numBeds}<br>
                                             ameneties: ${room.bidet}
                                             </button>
                                           </div>`
     });
-    const dateConfirmation = `<h3> Rooms Available on ${selectedDate} </h3>`
+    const dateConfirmation = `<h3> rooms available on ${selectedDate} </h3>`
     roomOptionsContainer.innerHTML += dateConfirmation + cards
   } else {
     hide([roomChoiceCTA, filterContainer])
@@ -425,14 +425,14 @@ const displayFilteredRooms = (e) => {
   let filteredRoomsHTML = ""
   filteredRooms.forEach((room) => {
     filteredRoomsHTML += `<div class="available-room-card">
-                                          <button id="${room.number}">
+                                          <button class="room-selector" id="${room.number}">
                                           ${room.roomType}<br>
                                           ${room.bedSize} x ${room.numBeds}<br>
                                           amenities: ${room.bidet}
                                           </button>
                                         </div>`
   })
-  let header = `<h3>Available On ${selectedDate}: ${filteredRooms[0].roomType}`
+  let header = `<h3>available on ${selectedDate}: ${filteredRooms[0].roomType}`
   roomOptionsContainer.innerHTML += header + filteredRoomsHTML;
 }
 
