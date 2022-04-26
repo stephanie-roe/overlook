@@ -1,7 +1,6 @@
 // Imports ---------------------------------------------------------------------
 
 import './css/styles.css';
-import './images/turing-logo.png';
 import {customersPromise, bookingsPromise, roomsPromise, postBooking, getPromise} from "./apiCalls";
 import Customer from "./classes/Customer";
 
