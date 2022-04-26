@@ -80,4 +80,4 @@ User dashboard / Booking a room:
 - The project repo can be found [here](https://github.com/stephanie-roe/overlook).
 
 ## Additional Resources
-- [Figma Wireframe]()
+- [Figma Wireframe](https://www.figma.com/file/hpilYsghpY4aSy8dzlvpyb/Untitled?node-id=0%3A1)
