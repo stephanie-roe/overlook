@@ -1,3 +1,12 @@
+const getToday = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  let date = `${yyyy}/${mm}/${dd}`;
+  return date;
+};
+
 const roomsData = [ {"number": 15,
                       "roomType": "residential suite",
                       "bidet": true,
@@ -57,13 +66,6 @@ const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
                       "date": `${getToday()}`,
                       "roomNumber": 18}];
 
-const getToday = () => {
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, "0");
-  let mm = String(today.getMonth() + 1).padStart(2, "0");
-  let yyyy = today.getFullYear();
-  let date = `${yyyy}/${mm}/${dd}`;
-  return date;
-};
+
 
 export {roomsData, customersData, bookingsData, getToday};
