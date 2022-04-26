@@ -39,13 +39,14 @@ const loginButton = document.querySelector(".submit-login-button");
 const username = document.querySelector("#username");
 const password = document.querySelector("#password");
 const nav = document.querySelector(".nav-bar");
-const customerName = document.querySelector(".customer-welcome")
+const customerName = document.querySelector(".customer-welcome");
+const loginError = document.querySelector(".login-error")
 //Event Listeners
 window.onload = (event) => loadWindow();
 
 loginButton.addEventListener("click", function() {
   event.preventDefault()
-  verifyCredentials()
+  verifyCredentials(customersData)
   // verifyUsername(customersData)
   // console.log(customersData)
 })
@@ -170,7 +171,7 @@ const loadWindow = () => {
 
 // MAYBE ACTUALLY KEEP THE FIRST FETCH IN THE PAGE LOAD AND THEN MOVE THE INITIALIZING FUNCS WHEN LOGGED IN
 
-const verifyUsername = (customersData) => {
+const verifyUsername = () => {
   const usernameEntered = username.value
   const letters = usernameEntered.slice(0, usernameEntered.search(/\d/))
   const userID = Number(usernameEntered.replace(letters, ""))
@@ -183,19 +184,33 @@ const verifyPassword = () => {
   console.log(passwordEntered)
   if (passwordEntered === "overlook2021") {
     return true
+  } else {
+    return false
   }
 }
 
-const verifyCredentials = () => {
-  const userID = verifyUsername(customersData)
-
+const verifyCredentials = (customersData) => {
+  const userID = verifyUsername()
+  customersData.forEach((customer) => {
+    if (customer.id === userID && verifyPassword()) {
+      instantiateCustomer(userID);
+      commenceLogin()
+    } else {
+      username.value = ""
+      password.value = ""
+      show([loginError])
+      setTimeout(() => hide([loginError]), "2000")
+    }
+  })
+// iterate over customersdata and find a matching id and if that matches and verify pass is truthy, then do below
   if (userID && verifyPassword()) {
-    console.log("it works!!!")
+    // console.log("it works!!!")
     instantiateCustomer(userID);
     commenceLogin()
     // instantiateCustomer(userID)
     // invoke login function - hide login page, invoke those methods that are currently in my promise.all show user dashboard
   }
+  //else show error message
   // NEED TO ADD AN ELSE TO DO ERROR HANDLING HERE
 }
 
