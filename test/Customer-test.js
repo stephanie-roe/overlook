@@ -1,7 +1,7 @@
 import chai from "chai";
 const expect = chai.expect;
 import Customer from "../src/classes/Customer";
-import {customersData, bookingsData, roomsData} from "./data";
+import {customersData, bookingsData, roomsData, getToday} from "./data";
 
 describe("Customer", () => {
   let customer1, customer2, customer3;
@@ -24,6 +24,11 @@ describe("Customer", () => {
   it("should have a property that holds the customer's id", () => {
     expect(customer1.id).to.equal(1);
     expect(customer2.id).to.equal(2);
+  });
+
+  it("should have a property that holds the customer's username", () => {
+    expect(customer1.username).to.equal("customer1");
+    expect(customer2.username).to.equal("customer2");
   });
 
   it("should have a property that holds the customer's name", () => {
@@ -56,7 +61,7 @@ describe("Customer", () => {
     customer2.getTotalSpend(roomsData);
 
     expect(customer1.amountSpent).to.equal(358.4);
-    expect(customer2.amountSpent).to.equal(856.71)
+    expect(customer2.amountSpent).to.equal(1063.95)
   });
 
   it("should have a total amount spent of 0 if user has no rooms booked", () => {
@@ -72,7 +77,7 @@ describe("Customer", () => {
 
     expect(customer1.allRooms[0].roomType).to.equal("residential suite");
     expect(customer1.allRooms[0].bidet).to.equal(true);
-    expect(customer1.allRooms[0].dateBooked).to.equal("2022/04/23");
+    expect(customer1.allRooms[0].dateBooked).to.equal("2122/04/23");
   });
 
   it("should not have any rooms if the customer has no bookings", () => {
@@ -87,8 +92,7 @@ describe("Customer", () => {
     customer1.getAllRooms(roomsData);
     customer1.getFutureRooms();
 
-    expect(customer1.futureBookings[0].dateBooked).to.equal("2022/04/23");
-    //change date to wayyy in the future
+    expect(customer1.futureBookings[0].dateBooked).to.equal("2122/04/23");
   });
 
   it("should not have any rooms in it's futureBookings array if they do not have any upcoming bookings", () => {
@@ -104,7 +108,7 @@ describe("Customer", () => {
     customer2.getAllRooms(roomsData);
     customer2.getCurrentRoom();
 
-    expect(customer2.currentBookings[0].dateBooked).to.equal("2022/04/22");
+    expect(customer2.currentBookings[0].dateBooked).to.equal(`${getToday()}`);
     // change this so the date is somehow today ????
     // somehow get current date(can do same for future)
   });
@@ -122,7 +126,7 @@ describe("Customer", () => {
     customer2.getAllRooms(roomsData);
     customer2.getPastRooms();
 
-    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/01/10");
+    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/04/22");
   });
 
   it("should be able to determine if a customer does not have any past bookings", () => {
@@ -139,7 +143,7 @@ describe("Customer", () => {
     customer2.getPastRooms();
     customer2.sortBookingDates("pastBookings");
 
-    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/01/22");
-    expect(customer2.pastBookings[0].costPerNight).to.equal(207.24);
+    expect(customer2.pastBookings[0].dateBooked).to.equal("2022/04/22");
+    expect(customer2.pastBookings[0].costPerNight).to.equal(477.38);
   });
 });
