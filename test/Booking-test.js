@@ -9,7 +9,6 @@ describe("Booking", () => {
   beforeEach(() => {
     booking1 = new Booking(bookingsData[0]);
     booking2 = new Booking(bookingsData[1]);
-
   });
 
   it("should be a function", () => {
@@ -37,7 +36,6 @@ describe("Booking", () => {
 
   it("should have a property that stores the room number of the booking", () => {
     expect(booking1.roomNumber).to.equal(15);
-    expect(booking2.roomNumber).to.equal(24)
-  })
-
+    expect(booking2.roomNumber).to.equal(24);
+  });
 });

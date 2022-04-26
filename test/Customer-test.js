@@ -109,8 +109,6 @@ describe("Customer", () => {
     customer2.getCurrentRoom();
 
     expect(customer2.currentBookings[0].dateBooked).to.equal(`${getToday()}`);
-    // change this so the date is somehow today ????
-    // somehow get current date(can do same for future)
   });
 
   it("should be able to determine if a customer does not have any active bookings", () => {
