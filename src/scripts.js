@@ -351,6 +351,9 @@ const showAvailableRooms = (roomsData) => {
   } else {
     hide([roomChoiceCTA, filterContainer]);
     roomOptionsContainer.innerHTML += `<h3 class="date-select-error-message">Please select a date to continue</h3>`;
+    setTimeout(() => {
+      roomOptionsContainer.innerHTML = ""
+    }, "2000");
   };
 };
 
