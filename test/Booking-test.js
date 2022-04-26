@@ -9,7 +9,6 @@ describe("Booking", () => {
   beforeEach(() => {
     booking1 = new Booking(bookingsData[0]);
     booking2 = new Booking(bookingsData[1]);
-
   });
 
   it("should be a function", () => {
@@ -31,13 +30,12 @@ describe("Booking", () => {
   });
 
   it("should have a date that is has been booked", () => {
-    expect(booking1.date).to.equal("2022/04/23");
+    expect(booking1.date).to.equal("2122/04/23");
     expect(booking2.date).to.equal("2022/04/22");
   });
 
   it("should have a property that stores the room number of the booking", () => {
     expect(booking1.roomNumber).to.equal(15);
-    expect(booking2.roomNumber).to.equal(24)
-  })
-
+    expect(booking2.roomNumber).to.equal(24);
+  });
 });
