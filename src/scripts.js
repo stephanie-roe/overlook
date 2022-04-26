@@ -196,6 +196,8 @@ const verifyCredentials = (customersData) => {
       instantiateCustomer(userID);
       commenceLogin()
     } else {
+      username.value = ""
+      password.value = ""
       show([loginError])
       setTimeout(() => hide([loginError]), "2000")
     }
