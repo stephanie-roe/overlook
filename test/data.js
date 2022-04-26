@@ -29,23 +29,12 @@ const roomsData = [ {"number": 15,
                       "numBeds": 2,
                       "costPerNight": 207.24}];
 
-
 const customersData = [ {"id": 1,
                       "name": "Leatha Ullrich"},
                       {"id": 2,
                       "name": "Rocio Schuster"},
                       {"id": 3,
                       "name": "Kelvin Schiller"}];
-
-const getToday = () => {
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, "0");
-  let mm = String(today.getMonth() + 1).padStart(2, "0");
-  let yyyy = today.getFullYear();
-  let date = `${yyyy}/${mm}/${dd}`;
-  return date;
-}
-
 
 const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
                       "userID": 1,
@@ -67,5 +56,14 @@ const bookingsData = [{"id": "5fwrgu4i7k55hl6sz",
                       "userID": 2,
                       "date": `${getToday()}`,
                       "roomNumber": 18}];
+
+const getToday = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  let date = `${yyyy}/${mm}/${dd}`;
+  return date;
+};
 
 export {roomsData, customersData, bookingsData, getToday};
