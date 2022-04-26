@@ -278,7 +278,7 @@ const showTotal = () => {
 };
 
 const loadBookingDashboard = () => {
-  hide([userDashboard]);
+  hide([userDashboard, filterContainer]);
   show([bookingDashboard, homeButton, submitBookingButton]);
   injectBookingForm();
   disableBookNowButton();
@@ -294,7 +294,7 @@ const redirectHome = () => {
 };
 
 const disableBookNowButton = () => {
-  if (selectedDate === "" && selectedRoom === null) {
+  if (selectedDate === "" && selectedRoom === null || selectedRoom === null) {
     submitBookingButton.disabled = true;
   } else {
     submitBookingButton.disabled = false;
