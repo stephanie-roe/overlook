@@ -1,13 +1,12 @@
 import { refreshBookings, currentCustomer, show} from "./scripts.js";
 
-let errorMessage = document.querySelector(".error-message-post-unsuccessful")
+let errorMessage = document.querySelector(".error-message-post-unsuccessful");
 
 const getPromise = (url) => {
   return fetch(url)
   .then(response => response.json())
   .catch(err => console.log("error"));
 };
-// add error handling for response.ok and throw catch error
 
 let customersPromise = getPromise("http://localhost:3001/api/v1/customers");
 let bookingsPromise = getPromise("http://localhost:3001/api/v1/bookings");
@@ -27,16 +26,16 @@ let postBooking = (obj) => {
     }
   })
   .then((booking) => {
-    errorMessage.innerText = ""
-    let id = currentCustomer.id
-    refreshBookings(id)
-    console.log("Success!")
+    errorMessage.innerText = "";
+    let id = currentCustomer.id;
+    refreshBookings(id);
+    console.log("Success!");
   })
   .catch((error) => {
     console.log("Oh No!");
-    show([errorMessage])
-    errorMessage.innerText = "Apologies, booking unsuccessful. Please select a date and room and try again."
-    return errorMessage
+    show([errorMessage]);
+    errorMessage.innerText = "Apologies, booking unsuccessful. Please select a date and room and try again.";
+    return errorMessage;
   });
 };
 
