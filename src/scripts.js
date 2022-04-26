@@ -202,6 +202,7 @@ const showBidet = (room) => {
 const showPastBookings = () => {
   pastBookingsTile.innerHTML = "";
   currentCustomer.getAllRooms(roomsData);
+  currentCustomer.pastBookings = [];
   currentCustomer.getPastRooms();
   currentCustomer.sortBookingDates("pastBookings");
   currentCustomer.pastBookings.forEach((room) => {
@@ -222,6 +223,7 @@ const showPastBookings = () => {
 const showCurrentBookings = () => {
   currentBookingsTile.innerHTML = "";
   currentCustomer.getAllRooms(roomsData);
+  currentCustomer.currentBookings = [];
   currentCustomer.getCurrentRoom();
   currentCustomer.sortBookingDates("currentBookings");
 
@@ -249,6 +251,7 @@ const showCurrentBookings = () => {
 const showFutureBookings = () => {
   futureBookingsTile.innerHTML = "";
   currentCustomer.getAllRooms(roomsData);
+  currentCustomer.futureBookings = [];
   currentCustomer.getFutureRooms();
   currentCustomer.sortBookingDates("futureBookings");
 
@@ -479,6 +482,6 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-// Exports
+// Exports ---------------------------------------------------------------------
 
 export { refreshBookings, currentCustomer, show };
