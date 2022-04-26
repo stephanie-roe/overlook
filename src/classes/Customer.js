@@ -1,21 +1,16 @@
 class Customer {
   constructor(customer) {
     this.id = customer.id;
-    this.username = `customer${customer.id}`
+    this.username = `customer${customer.id}`;
     //NEED TO TEST FOR THIS
     this.name = customer.name;
     this.allBookings = [];
-    // booking objs - might not need this?
     this.allRooms = [];
-    // this is what will be displayed on the DOM
     this.pastBookings = [];
     this.currentBookings = [];
     this.futureBookings = [];
     this.amountSpent = 0;
-  }
-  // addBooking(booking) {
-  //
-  // }
+  };
   getCustomerBookings(bookings) {
     bookings.forEach((booking) => {
       if (this.id === booking.userID && !this.allBookings.includes(booking)) {
@@ -45,78 +40,78 @@ class Customer {
                       bedSize: room.bedSize,
                       numBeds: room.numBeds,
                       costPerNight: room.costPerNight,
-                      dateBooked: booking.date}
+                      dateBooked: booking.date};
           arr.push(obj);
         }
-      })
-      return arr
-    }, [])
-    this.allRooms = result
+      });
+      return arr;
+    }, []);
+    this.allRooms = result;
   };
   getFutureRooms() {
-    let today = new Date()
+    let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = today.getFullYear();
-    let date = `${yyyy}/${mm}/${dd}`
+    let date = `${yyyy}/${mm}/${dd}`;
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
       if (bookingDate > currentDate && !this.futureBookings.includes(room)) {
-        this.futureBookings.push(room)
-      }
-    })
-  }
+        this.futureBookings.push(room);
+      };
+    });
+  };
   getCurrentRoom() {
-    let today = new Date()
+    let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = today.getFullYear();
-    let date = `${yyyy}/${mm}/${dd}`
+    let date = `${yyyy}/${mm}/${dd}`;
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
       if (bookingDate === currentDate && !this.currentBookings.includes(room)) {
-        this.currentBookings.push(room)
-      }
-    })
-  }
+        this.currentBookings.push(room);
+      };
+    });
+  };
   getPastRooms() {
-    let today = new Date()
+    let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = today.getFullYear();
-    let date = `${yyyy}/${mm}/${dd}`
+    let date = `${yyyy}/${mm}/${dd}`;
     let currentDate = Date.parse(date);
     this.allRooms.forEach((room) => {
       let bookingDate = Date.parse(room.dateBooked);
       if (bookingDate < currentDate && !this.pastBookings.includes(room)) {
-        this.pastBookings.push(room)
-      }
-    })
-  }
+        this.pastBookings.push(room);
+      };
+    });
+  };
   sortBookingDates(roomsArray) {
     let sortedDates = this[roomsArray].reduce((acc, room) => {
       let parsed = Date.parse(room.dateBooked);
       acc.push(parsed);
-      return acc
+      return acc;
     }, []);
 
     sortedDates.sort((a, b) => {
-      return b - a
-    })
+      return b - a;
+    });
 
     let result = sortedDates.reduce((acc, date) => {
       this[roomsArray].forEach(room => {
-        let bookingDate = Date.parse(room.dateBooked)
+        let bookingDate = Date.parse(room.dateBooked);
         if (date === bookingDate && !acc.includes(room)) {
-          acc.push(room)
-        }
-      })
-      return acc
-    }, [])
-     return this[roomsArray] = result
-  }
+          acc.push(room);
+        };
+      });
+      return acc;
+    }, []);
+     return this[roomsArray] = result;
+  };
 };
 
 export default Customer;

@@ -142,7 +142,4 @@ describe("Customer", () => {
     expect(customer2.pastBookings[0].dateBooked).to.equal("2022/01/22");
     expect(customer2.pastBookings[0].costPerNight).to.equal(207.24);
   });
-
-// sad path for sort function????
-
 });
