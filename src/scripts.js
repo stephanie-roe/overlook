@@ -196,8 +196,8 @@ const verifyCredentials = (customersData) => {
       instantiateCustomer(userID);
       commenceLogin()
     } else {
-      username.value = ""
-      password.value = ""
+      // username.value = ""
+      // password.value = ""
       show([loginError])
       setTimeout(() => hide([loginError]), "2000")
     }
@@ -243,6 +243,14 @@ const instantiateCustomer = (id) => {
   return currentCustomer
 };
 
+const showBidet = (room) => {
+  if (room.bidet === false) {
+    return "no bidet"
+  } else {
+    return "bidet"
+  }
+}
+
 const showPastBookings = () => {
   pastBookingsTile.innerHTML = ""
   currentCustomer.getAllRooms(roomsData);
@@ -258,7 +266,7 @@ const showPastBookings = () => {
                                 </div>
                                   <p class="room-type">You booked the ${room.roomType}.</p>
                                   <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
-                                  <p class="booking-details">Has bidet? ${room.bidet}</p>
+                                  <p class="booking-details">amenities: ${showBidet(room)}</p>
                                   <p class="booking-total">Total: ${total}</p>
                                   </section>`
   // could be cool to reformat the date so it is more readable
@@ -285,7 +293,7 @@ const showCurrentBookings = () => {
                                   </div>
                                     <p class="room-type">You booked the ${room.roomType}.</p>
                                     <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
-                                    <p class="booking-details">Has bidet? ${room.bidet}</p>
+                                    <p class="booking-details">amenities: ${showBidet(room)}</p>
                                     <p class="booking-total">Total: ${total}</p>
                                     </section>`
     })
@@ -307,7 +315,7 @@ const showFutureBookings = () => {
                                 </div>
                                   <p class="room-type">You booked the ${room.roomType}.</p>
                                   <p class="booking-details">${room.bedSize} x ${room.numBeds}</p>
-                                  <p class="booking-details">Has bidet? ${room.bidet}</p>
+                                  <p class="booking-details">amenities: ${showBidet(room)}</p>
                                   <p class="booking-total">Total: ${total}</p>
                                   </section>`
   // could be cool to reformat the date so it is more readable
@@ -383,7 +391,7 @@ const showAvailableRooms = (roomsData) => {
                                             <button class="room-selector" id="${room.number}">
                                             ${room.roomType}<br>
                                             ${room.bedSize} x ${room.numBeds}<br>
-                                            ameneties: ${room.bidet}
+                                            ameneties: ${showBidet(room)}
                                             </button>
                                           </div>`
     });
