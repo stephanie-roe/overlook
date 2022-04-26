@@ -7,6 +7,6 @@ class Room {
     this.numBeds = room.numBeds;
     this.costPerNight = room.costPerNight;
   }
-}
+};
 
 export default Room;
